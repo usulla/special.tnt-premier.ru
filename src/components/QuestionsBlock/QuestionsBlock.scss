@@ -1,0 +1,103 @@
+@import "../../variables.scss";
+
+.question-content {
+    width: 691px;
+    max-width: 90%;
+    margin: 0 auto 45px;
+
+    .question__number-row {
+        text-align: right;
+
+        .question__number {
+            font-family: Rubik;
+            font-size: 12px;
+            color: $gold;
+            font-style: normal;
+            letter-spacing: -0.8px;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #f1b769;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 17px;
+        }
+    }
+
+    .question__image img {
+        width: 100%;
+    }
+
+    .question__title {
+        font-family: Rubik;
+        font-size: 20px;
+        font-weight: bold;
+        letter-spacing: -0.8px;
+        text-align: center;
+        color: $gold;
+        border: 1px solid #f1b769;
+        border-radius: 10px 10px 0px 0px;
+        padding: 0px 10px 0px 10px;
+        height: 126px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span {
+            display: inline-block;
+            width: 364px;
+            max-width: 90%;
+
+            &.correctly {
+                color: #91dc5a;
+            }
+
+            &.wrong {
+                color: #d80027;
+            }
+        }
+    }
+
+    .question__image {
+        margin-bottom: 14px;
+    }
+
+    .question__answer {
+        border: 1px solid #f1b769;
+        font-family: Rubik;
+        font-size: 12px;
+        font-weight: normal;
+        letter-spacing: -0.7px;
+        text-align: center;
+        color: #fff;
+        height: 51px;
+        line-height: 51px;
+        border-radius: 10px;
+        margin: 10px 0;
+
+        @media (min-width: $mobile_l) {
+            margin: 6.5px 0;
+            width: calc(50% - 8.5px);
+            display: inline-block;
+
+            &:nth-child(2),
+            &:nth-child(4) {
+                margin-left: 13px;
+            }
+        }
+
+        &.active {
+            background: $gold;
+            color: #000;
+        }
+        &.correctly{
+        	background:#91dc5a;
+        }
+        &.wrong{
+        	background:#d80027;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

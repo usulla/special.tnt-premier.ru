@@ -1,0 +1,15 @@
+html {
+    line-height: 1.15;
+    /* 1 */
+    -webkit-text-size-adjust: 100%;
+    /* 2 */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #0f1010 url('./images/bg-top3x.jpg');
+    background-size: 100%;
+    background-position: top center;
+    background-repeat: no-repeat;
+}
