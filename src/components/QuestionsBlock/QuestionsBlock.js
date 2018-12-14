@@ -18,7 +18,9 @@ class QuestionsBlock extends Component {
             allowedAnswer: true,
             numbersQuestions: [],
             currentQuestions: 2,
-            textStatus: 'Ты абсолютно прав!'
+            textStatus: 'Ты абсолютно прав!',
+            imageChange: '',
+            changeImage: true
 
 
         };
@@ -51,7 +53,12 @@ class QuestionsBlock extends Component {
                     // номер верного ответа
                     var correctAnswer = Number(data.correctAnswer);
                     var textStatus = data.text;
-                    
+
+                    // картинка, которая меняется при ответе на вопрос
+                    if (data.image) {
+                        this.setState({ imageChange: data.image, changeImage: false });
+
+                    }
                     // убираем вопрос и выводим результат 
                     this.setState({ loadingQuestion: false, textStatus: textStatus });
                     // если верный ответ меняем состояние на true и добавляем к кнопке класс correctly
@@ -96,8 +103,8 @@ class QuestionsBlock extends Component {
     }
 
     render() {
-        const { count, sendanswer, loadingQuestion, correctAnswer, textStatus } = this.state
-        const { numbersQuestions, question, questionImage, answers, idBlogger } = this.props
+        const { count, sendanswer, loadingQuestion, correctAnswer, textStatus, changeImage } = this.state;
+        const { numbersQuestions, question, questionImage, answers, idBlogger } = this.props;
         return (
             (count < 6) ?
             <div className="question-content">
@@ -128,7 +135,10 @@ class QuestionsBlock extends Component {
                 </div> 
 
                 <div className="question__image">
-                    <img src={questionImage}/>
+                {(changeImage) ?
+                    <img src={questionImage}/> :
+                    <img src={changeImage}/>
+                }
                 </div>
                     <div className='question__answers'>
                     {answers.map((item, index) => 
