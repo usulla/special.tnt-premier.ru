@@ -28,7 +28,7 @@ class App extends Component {
         console.log(this.state.idBlogger, 'idBlogger');
     }
     render() {
-        const { numbersQuestions, viewStartPage, question, questionImage, answers } = this.state
+        const { numbersQuestions, viewStartPage, question, questionImage, answers, idBlogger } = this.state
         return (
             <div className="App">
         <header className="tnt-premier-logo">
@@ -37,7 +37,7 @@ class App extends Component {
         {(viewStartPage) ?
         <StartPage viewStartPage={this.viewStartPage}/> :
         //  передаем в компонент с вопросами массив с номерами вопросов и контент для вопросов
-        <QuestionsBlock numbersQuestions={numbersQuestions} question={question} questionImage={questionImage} answers={answers}/>
+        <QuestionsBlock numbersQuestions={numbersQuestions} question={question} questionImage={questionImage} answers={answers} idBlogger={idBlogger}/>
       }
       </div>
         );
