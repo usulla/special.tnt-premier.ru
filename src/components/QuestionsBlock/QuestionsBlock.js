@@ -21,12 +21,11 @@ class QuestionsBlock extends Component {
             textStatus: 'Ты абсолютно прав!',
             imageChange: '',
             changeImage: true
-
-
         };
     }
     componentDidMount() {
-        this.setState({ numbersQuestions: this.props.numbersQuestions });
+        const { numbersQuestions } = this.props;
+        this.setState({ numbersQuestions });
     }
 
     answerClick(e) {
@@ -106,7 +105,7 @@ class QuestionsBlock extends Component {
         const { count, sendanswer, loadingQuestion, correctAnswer, textStatus, changeImage } = this.state;
         const { numbersQuestions, question, questionImage, answers, idBlogger } = this.props;
         return (
-            (count < 6) ?
+            (count < 1) ?
             <div className="question-content">
                 <div className="question__number-row">
                   <div className="question__number">
