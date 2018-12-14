@@ -11,26 +11,23 @@ import './StartPage.scss';
 class StartPage extends Component {
     constructor() {
         super();
-        this.state = {};
+        this.state = {
+            question: '',
+            questionImage: '',
+            answers: [],
+            count: 1,
+            viewStartPage: false
+        };
     }
 
-    // При нажатии кнопки Следующий вопрос
-    nextQuestion(e) {
-        //отправляем номер следующего вопроса
-        axios.get('/questionsData3.json', { question: this.state.count })
+    // При нажатии кнопки Начать
+    startQuestions(e) {
+        //отправляем номер запрашиваемого вопроса 1
+        axios.get('/questionsData.json')
             .then(response => {
-                // удаляем все дополнительные классы у кнопок
-                document.querySelector('.question__answer.active').classList.remove('active');
-                document.querySelector('.question__answer.correctly').classList.remove('correctly');
-                if (document.querySelector('.question__answer.wrong')) {
-                    document.querySelector('.question__answer.wrong').classList.remove('wrong');
-                }
-                //и в ответ получаем текст вопроса, картинку, варианты ответов
+                // загружаем в состояния текст, картинку вороса и тексты вариантов ответов
                 this.setState({ question: response.data.question, questionImage: response.data.questionImage, answers: response.data.answers });
-                // убираем вопрос и выводим результат 
-                this.setState({ loadingQuestion: true });
-                // разерешаем выбирать ответ (нажимать на кнопки)
-                this.setState({ allowedAnswer: true });
+                this.props.viewStartPage(this.state.viewStartPage);
             });
     }
 
@@ -50,6 +47,9 @@ class StartPage extends Component {
                         <li><span><img src={icon5}/></span>Готов? Тогда поехали!</li>
                         <li><span><img src={icon6}/></span>Внимание! Промокод будет показан только 1 раз! Обязательно скопируй его или отправь себе на почту.</li>
                     </ul>
+                    <div className='button start-button' onClick={e => this.startQuestions(e)}>
+                Начать
+              </div>
                 </div>
             </div>
         );

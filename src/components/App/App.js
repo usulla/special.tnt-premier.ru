@@ -9,17 +9,33 @@ import QuestionsBlock from '../QuestionsBlock/QuestionsBlock.js';
 library.add(faIgloo)
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
+    constructor() {
+        super();
+        this.state = {
+            question: '',
+            questionImage: '',
+            answers: [],
+            count: 1,
+            viewStartPage: true
+        };
+    }
+    viewStartPage = (value) => {
+        this.setState({ viewStartPage: value })
+    }
+    render() {
+        const { viewStartPage } = this.state
+        return (
+            <div className="App">
         <header className="tnt-premier-logo">
           <img src={logo} alt="ТНТ Premier" />
         </header>
-        <StartPage/>
+        {(viewStartPage) ?
+        <StartPage viewStartPage={this.viewStartPage}/> :
         <QuestionsBlock/>
+      }
       </div>
-    );
-  }
+        );
+    }
 }
 
 export default App;

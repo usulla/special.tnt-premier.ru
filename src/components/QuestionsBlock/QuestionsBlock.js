@@ -20,7 +20,6 @@ class QuestionsBlock extends Component {
         };
     }
     componentDidMount() {
-        var answerMetka = 0;
         axios.get('/questionsData.json')
             .then(response => {
                 // загружаем в состояния текст, картинку вороса и тексты вариантов ответов
