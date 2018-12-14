@@ -16,14 +16,19 @@ class App extends Component {
             questionImage: '',
             answers: [],
             count: 1,
-            viewStartPage: true
+            viewStartPage: true,
+            numbersQuestions: [],
+            idBlogger: 0
+
         };
     }
-    viewStartPage = (value) => {
-        this.setState({ viewStartPage: value })
+    //получаем из компонента StartPage событие старта теста, вопрос, картинку, ответы и массив с номерами вопросов и записываем в состояния
+    viewStartPage = (view, question, image, answers, numbers, idBlogger) => {
+        this.setState({ viewStartPage: view, question: question, questionImage:image, answers:answers, numbersQuestions:numbers, idBlogger:idBlogger});
+        console.log(this.state.idBlogger, 'idBlogger');
     }
     render() {
-        const { viewStartPage } = this.state
+        const { numbersQuestions, viewStartPage, question, questionImage, answers } = this.state
         return (
             <div className="App">
         <header className="tnt-premier-logo">
@@ -31,7 +36,8 @@ class App extends Component {
         </header>
         {(viewStartPage) ?
         <StartPage viewStartPage={this.viewStartPage}/> :
-        <QuestionsBlock/>
+        //  передаем в компонент с вопросами массив с номерами вопросов и контент для вопросов
+        <QuestionsBlock numbersQuestions={numbersQuestions} question={question} questionImage={questionImage} answers={answers}/>
       }
       </div>
         );

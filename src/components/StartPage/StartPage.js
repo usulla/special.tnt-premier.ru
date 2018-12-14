@@ -16,18 +16,26 @@ class StartPage extends Component {
             questionImage: '',
             answers: [],
             count: 1,
-            viewStartPage: false
+            viewStartPage: false,
+            numbersQuestions: [],
+            idBlogger: 0
         };
     }
 
     // При нажатии кнопки Начать
     startQuestions(e) {
         //отправляем номер запрашиваемого вопроса 1
-        axios.get('/questionsData.json')
+        axios.get('https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/survey')
             .then(response => {
-                // загружаем в состояния текст, картинку вороса и тексты вариантов ответов
-                this.setState({ question: response.data.question, questionImage: response.data.questionImage, answers: response.data.answers });
-                this.props.viewStartPage(this.state.viewStartPage);
+                // загружаем номера вопросов из массива
+               this.setState({ numbersQuestions: response.data.questions});
+               axios.get(`https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/question/${response.data.questions[0]}`)
+                    .then(response => {
+                        // загружаем в состояния текст, картинку вороса и тексты вариантов ответов
+                        this.setState({ question: response.data.question, questionImage: response.data.questionImage, answers: response.data.answers, idBlogger: response.data.id});
+                        // отправляем в App, что можно показывать вопросы
+                        this.props.viewStartPage(this.state.viewStartPage, this.state.question, this.state.questionImage, this.state.answers, this.state.numbersQuestions, this.state.idBlogger);
+                    });
             });
     }
 
@@ -40,14 +48,14 @@ class StartPage extends Component {
                 </div>
                 <div className='startpage__content'>
                     <ul className='startpage__list'>
-                        <li><span><img src={icon1}/></span>Жми на кнопку ниже</li>
-                        <li><span><img src={icon2}/></span>Отвечай на 5 простых вопросов</li>
-                        <li><span><img src={icon3}/></span>Отвечай правильно!</li>
-                        <li><span><img src={icon4}/></span>Если не ошибешься ни разу, то получишь 14 дней просмотра на ТНТ-PREMIER</li>
-                        <li><span><img src={icon5}/></span>Готов? Тогда поехали!</li>
-                        <li><span><img src={icon6}/></span>Внимание! Промокод будет показан только 1 раз! Обязательно скопируй его или отправь себе на почту.</li>
+                        <li><span><img src={icon1} alt="Storage icon"/></span>Жми на кнопку ниже</li>
+                        <li><span><img src={icon2} alt="Storage icon"/></span>Отвечай на 5 простых вопросов</li>
+                        <li><span><img src={icon3} alt="Storage icon"/></span>Отвечай правильно!</li>
+                        <li><span><img src={icon4} alt="Storage icon"/></span>Если не ошибешься ни разу, то получишь 14 дней просмотра на ТНТ-PREMIER</li>
+                        <li><span><img src={icon5} alt="Storage icon"/></span>Готов? Тогда поехали!</li>
+                        <li><span><img src={icon6} alt="Storage icon"/></span>Внимание! Промокод будет показан только 1 раз! Обязательно скопируй его или отправь себе на почту.</li>
                     </ul>
-                    <div className='button start-button' onClick={e => this.startQuestions(e)}>
+                    <div className='button start-button' onClick={e => this.startQuestions(e)} >
                 Начать
               </div>
                 </div>

@@ -20,21 +20,18 @@ class QuestionsBlock extends Component {
         };
     }
     componentDidMount() {
-        axios.get('/questionsData.json')
-            .then(response => {
-                // загружаем в состояния текст, картинку вороса и тексты вариантов ответов
-                this.setState({ question: response.data.question, questionImage: response.data.questionImage, answers: response.data.answers });
-            });
     }
 
     answerClick(e) {
         if (this.state.allowedAnswer == true) {
             this.setState({ allowedAnswer: false });
+            // Номер 1-го вопроса для отправки на бэкенд
+            var firstNum = this.props.numbersQuestions[0];
             // Номер выбранного овтета
             var answerNum = Number(e.target.dataset.id) + 1;
             e.target.classList.add('active');
             // отправляем номер текущего вопроса и номер выбранного ответа 
-            axios.get('/questionsData2.json', { question: this.state.count, answer: answerNum })
+            axios.get(`https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/question/${response.data.questions[0]}`, { question: firstNum, answer: answerNum })
                 .then(response => {
                     // номер верного ответа
                     var correctAnswer = response.data.correctAnswer;
@@ -74,15 +71,16 @@ class QuestionsBlock extends Component {
                 }
                 //и в ответ получаем текст вопроса, картинку, варианты ответов
                 this.setState({ question: response.data.question, questionImage: response.data.questionImage, answers: response.data.answers });
-                 // убираем вопрос и выводим результат 
-                    this.setState({ loadingQuestion: true });
+                // убираем вопрос и выводим результат 
+                this.setState({ loadingQuestion: true });
                 // разерешаем выбирать ответ (нажимать на кнопки)
                 this.setState({ allowedAnswer: true });
             });
     }
 
     render() {
-        const { question, questionImage, answers, count, sendanswer, loadingQuestion, correctAnswer } = this.state
+        const { count, sendanswer, loadingQuestion, correctAnswer } = this.state
+        const { numbersQuestions, question, questionImage, answers } = this.props
         return (
             (count < 6) ?
             <div className="question-content">

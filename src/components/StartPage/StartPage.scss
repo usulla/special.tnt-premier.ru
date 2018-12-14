@@ -13,6 +13,7 @@
 
 .startpage__list {
     list-style: none;
+    padding-left: 0;
 
     li {
         display: flex;
@@ -55,6 +56,7 @@
         align-items: center;
         justify-content: center;
         float: left;
+        flex-shrink: 0;
 
         img {
             width: 16px;
