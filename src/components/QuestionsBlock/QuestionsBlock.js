@@ -15,23 +15,28 @@ class QuestionsBlock extends Component {
             sendanswer: 1,
             loadingQuestion: true,
             correctAnswer: '',
-            allowedAnswer: true
+            allowedAnswer: true,
+            numbersQuestions: [],
+            currentQuestions: 2
+
 
         };
     }
     componentDidMount() {
+        this.setState({ numbersQuestions: this.props.numbersQuestions });
     }
 
     answerClick(e) {
         if (this.state.allowedAnswer == true) {
             this.setState({ allowedAnswer: false });
-            // Номер 1-го вопроса для отправки на бэкенд
-            var firstNum = this.props.numbersQuestions[0];
+            // Номер 2-го и следующих вопросов для отправки на бэкенд
+            var currentNum = this.props.numbersQuestions[this.state.count];
+            this.setState({ currentQuestions: currentNum });
             // Номер выбранного овтета
             var answerNum = Number(e.target.dataset.id) + 1;
             e.target.classList.add('active');
             // отправляем номер текущего вопроса и номер выбранного ответа 
-            axios.get(`https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/question/${response.data.questions[0]}`, { question: firstNum, answer: answerNum })
+            axios.post(`https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/question/${currentNum}`, { question: currentNum, answer: answerNum })
                 .then(response => {
                     // номер верного ответа
                     var correctAnswer = response.data.correctAnswer;
@@ -51,10 +56,6 @@ class QuestionsBlock extends Component {
                         document.querySelectorAll('.question__answer')[correctAnswer].classList.add('correctly');
 
                     }
-                    // увеличиваем номер вопроса
-                    this.setState((prevState, { count }) => ({
-                        count: prevState.count + 1
-                    }));
                 });
         }
     }
@@ -76,6 +77,10 @@ class QuestionsBlock extends Component {
                 // разерешаем выбирать ответ (нажимать на кнопки)
                 this.setState({ allowedAnswer: true });
             });
+        // увеличиваем номер вопроса
+        this.setState((prevState, { count }) => ({
+            count: prevState.count + 1
+        }));
     }
 
     render() {
