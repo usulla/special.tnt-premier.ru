@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import appstore from '../../images/result/appstore2x.png';
 import googleplay from '../../images/result/google-play2x.png';
 import web from '../../images/result/web2x.png';
@@ -25,7 +25,7 @@ class ResultPromocode extends Component {
         const { givePromocode } = this.state;
         return (
             <div className="result__content">
-                <div className="top-like">{givePromocode ? <img src={like} /> : <img src={sadface} />}</div>
+                <div className="top-like">{givePromocode ? <img src={like} alt="Like" /> : <img src={sadface} alt="Sadface" />}</div>
                 <div className="result__title">
                     Твой результат ХХХ из ХХХ
                     <br />
@@ -55,12 +55,12 @@ class ResultPromocode extends Component {
                         <div className="instruction">
                             <div className="instruction-content">
                                 1. Скачать приложение ТНТ-PREMIER! <br />
-                                <img className="appstore" src={appstore} />
-                                <img className="googleplay" src={googleplay} />
+                                <img className="appstore" src={appstore} alt="App store" />
+                                <img className="googleplay" src={googleplay} alt="Google play" />
                                 <br />
                                 <br />
                                 2. Или зайти на сайт <br />
-                                <img className="web" src={web} />
+                                <img className="web" src={web} alt="Web" />
                                 <br />
                                 <br />
                                 3. Войти в свой аккаунт или зарегистрироваться на сервисе
@@ -78,7 +78,7 @@ class ResultPromocode extends Component {
                                 Датой начала действия подписки считается дата активации промокода на сервисе
                                 ТНТ-PREMIER. Активировать промокод необходимо не позднее 31 декабря 2019 года.
                                 <br />
-                                <a href="">Подробнее о сервисе ТНТ-PREMIER и о подписке PREMIER можно прочитать тут.</a>
+                                <a href="#">Подробнее о сервисе ТНТ-PREMIER и о подписке PREMIER можно прочитать тут.</a>
                                 <div className="footer-soc">
                                     Не забудь рассказать друзьям о своей победе!
                                     <FontAwesomeIcon icon="igloo" />
