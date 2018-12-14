@@ -9,10 +9,12 @@ import './ResultPromocode.scss';
 import Sharing from '../Sharing/Sharing'
 
 class ResultPromocode extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        const { idBlogger } = this.props;
         this.state = {
-            givePromocode: true
+            givePromocode: true,
+            idBlogger: this.props.idBlogger
         };
     }
     componentDidMount() {}
@@ -20,9 +22,13 @@ class ResultPromocode extends Component {
         var promocode = document.querySelector('.result__promocode').innerText;
         navigator.clipboard.writeText(promocode);
     }
-
+    shouldComponentUpdate(nextProps) {
+        const { idBlogger } = this.props;
+        return idBlogger !== nextProps.idBlogger;
+    }
     render() {
-        const { givePromocode } = this.state;
+        const { givePromocode, idBlogger } = this.state;
+
         return (
             <div className="result__content">
                 <div className="top-like">{givePromocode ? <img src={like} alt="Like" /> : <img src={sadface} alt="Sadface" />}</div>
@@ -87,7 +93,8 @@ class ResultPromocode extends Component {
                                     iconBgStyle={{
                                         fill: '#ffcd7f'
                                     }}
-                                    logoFillColor='#0f1010'/>
+                                    logoFillColor='#0f1010'
+                                    surveyId={idBlogger}/>
                             </div>
                         </div>
                     </div>

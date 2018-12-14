@@ -18,12 +18,11 @@ class QuestionsBlock extends Component {
             allowedAnswer: true,
             numbersQuestions: [],
             currentQuestions: 2
-
-
         };
     }
     componentDidMount() {
-        this.setState({ numbersQuestions: this.props.numbersQuestions });
+        const { numbersQuestions } = this.props;
+        this.setState({ numbersQuestions });
     }
 
     answerClick(e) {
@@ -86,6 +85,7 @@ class QuestionsBlock extends Component {
     render() {
         const { count, sendanswer, loadingQuestion, correctAnswer } = this.state
         const { numbersQuestions, question, questionImage, answers, idBlogger } = this.props
+
         return (
             (count < 1) ?
             <div className="question-content">

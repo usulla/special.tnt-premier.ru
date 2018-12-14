@@ -12,41 +12,41 @@ import {
     VKIcon
 } from 'react-share'
 
-import {
-    TWITTER_URL,
-    TWITTER_TITLE
-} from './SharingData.json'
-
 const Sharing = ({
     title,
     className,
     size,
     round,
     iconBgStyle,
-    logoFillColor
-}) =>
-    <div className={className}>
-        <h6 className={`${className}__title`}>
-            {title}
-        </h6>
-        <div className={`${className}__socials`}>
-            <div className={`${className}__social`}>
-                <TwitterShareButton className={`${className}__button ${className}__button--twitter`} url={TWITTER_URL}>
-                    <TwitterIcon size={size} round={round} iconBgStyle={iconBgStyle} logoFillColor={logoFillColor} />
-                </TwitterShareButton>
-            </div>
-            <div className={`${className}__social`}>
-                <FacebookShareButton className={`${className}__button ${className}__button--facebook`} url={TWITTER_URL}>
-                    <FacebookIcon size={size} round={round} iconBgStyle={iconBgStyle} logoFillColor={logoFillColor} />
-                </FacebookShareButton>
-            </div>
-            <div className={`${className}__social`}>
-                <VKShareButton className={`${className}__button ${className}__button--vk`} url={TWITTER_URL}>
-                    <VKIcon size={size} round={round} iconBgStyle={iconBgStyle} logoFillColor={logoFillColor} />
-                </VKShareButton>
+    logoFillColor,
+    surveyId
+}) => {
+    const url = `https://special.tnt-premier.ru/insta-bloggers-2018/?survey=${surveyId}`
+    return (
+        <div className={className}>
+            <h6 className={`${className}__title`}>
+                {title}
+            </h6>
+            <div className={`${className}__socials`}>
+                <div className={`${className}__social`}>
+                    <TwitterShareButton className={`${className}__button ${className}__button--twitter`} url={url}>
+                        <TwitterIcon size={size} round={round} iconBgStyle={iconBgStyle} logoFillColor={logoFillColor} />
+                    </TwitterShareButton>
+                </div>
+                <div className={`${className}__social`}>
+                    <FacebookShareButton className={`${className}__button ${className}__button--facebook`} url={url}>
+                        <FacebookIcon size={size} round={round} iconBgStyle={iconBgStyle} logoFillColor={logoFillColor} />
+                    </FacebookShareButton>
+                </div>
+                <div className={`${className}__social`}>
+                    <VKShareButton className={`${className}__button ${className}__button--vk`} url={url}>
+                        <VKIcon size={size} round={round} iconBgStyle={iconBgStyle} logoFillColor={logoFillColor} />
+                    </VKShareButton>
+                </div>
             </div>
         </div>
-    </div>
+    )
+}
 
 Sharing.propTypes = {
     title: PropTypes.string,
@@ -54,7 +54,8 @@ Sharing.propTypes = {
     size: PropTypes.number.isRequired,
     round: PropTypes.bool,
     iconBgStyle: PropTypes.object,
-    logoFillColor: PropTypes.string
+    logoFillColor: PropTypes.string,
+    url: PropTypes.string.isRequired
 }
 
 Sharing.defaultProps = {
@@ -63,7 +64,8 @@ Sharing.defaultProps = {
     size: 32,
     round: false,
     iconBgStyle: {},
-    logoFillColor: '#000'
+    logoFillColor: '#000',
+    url: ''
 }
 
 export default Sharing
