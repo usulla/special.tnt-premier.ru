@@ -18,7 +18,7 @@ class StartPage extends Component {
             count: 1,
             viewStartPage: false,
             numbersQuestions: [],
-            idBlogger: 0
+            idBlogger: ''
         };
     }
 
@@ -27,12 +27,27 @@ class StartPage extends Component {
         //отправляем номер запрашиваемого вопроса 1
         axios.get('https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/survey')
             .then(response => {
+                const { data } = response;
+                const idBlogger= data.survey;
+
                 // загружаем номера вопросов из массива
                this.setState({ numbersQuestions: response.data.questions});
                axios.get(`https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/question/${response.data.questions[0]}`)
                     .then(response => {
                         // загружаем в состояния текст, картинку вороса и тексты вариантов ответов
-                        this.setState({ question: response.data.question, questionImage: response.data.questionImage, answers: response.data.answers, idBlogger: response.data.id});
+                        const { data } = response;
+                        const {
+                                question,
+                                questionImage,
+                                answers } = data;
+
+                        this.setState({
+                            question,
+                            questionImage,
+                            answers,
+                            idBlogger
+                        });
+
                         // отправляем в App, что можно показывать вопросы
                         this.props.viewStartPage(this.state.viewStartPage, this.state.question, this.state.questionImage, this.state.answers, this.state.numbersQuestions, this.state.idBlogger);
                     });
