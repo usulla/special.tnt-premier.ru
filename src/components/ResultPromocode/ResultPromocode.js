@@ -6,7 +6,7 @@ import web from '../../images/result/web2x.png';
 import like from '../../images/result/like2x.png';
 import sadface from '../../images/result/sadface2x.png';
 import './ResultPromocode.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Sharing from '../Sharing/Sharing'
 
 class ResultPromocode extends Component {
     constructor() {
@@ -79,10 +79,15 @@ class ResultPromocode extends Component {
                                 ТНТ-PREMIER. Активировать промокод необходимо не позднее 31 декабря 2019 года.
                                 <br />
                                 <a href="#">Подробнее о сервисе ТНТ-PREMIER и о подписке PREMIER можно прочитать тут.</a>
-                                <div className="footer-soc">
-                                    Не забудь рассказать друзьям о своей победе!
-                                    <FontAwesomeIcon icon="igloo" />
-                                </div>
+                                <Sharing
+                                    title='Не забудь рассказать друзьям о своей победе!'
+                                    className='sharing'
+                                    size={50}
+                                    round={true}
+                                    iconBgStyle={{
+                                        fill: '#ffcd7f'
+                                    }}
+                                    logoFillColor='#0f1010'/>
                             </div>
                         </div>
                     </div>

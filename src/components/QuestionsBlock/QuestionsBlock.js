@@ -84,7 +84,7 @@ class QuestionsBlock extends Component {
     render() {
         const { question, questionImage, answers, count, sendanswer, loadingQuestion, correctAnswer } = this.state
         return (
-            (count < 6) ?
+            (count < 1) ?
             <div className="question-content">
                 <div className="question__number-row">
                   <div className="question__number">
