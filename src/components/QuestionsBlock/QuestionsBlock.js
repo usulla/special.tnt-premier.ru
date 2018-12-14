@@ -80,7 +80,7 @@ class QuestionsBlock extends Component {
 
     render() {
         const { count, sendanswer, loadingQuestion, correctAnswer } = this.state
-        const { numbersQuestions, question, questionImage, answers } = this.props
+        const { numbersQuestions, question, questionImage, answers, idBlogger } = this.props
         return (
             (count < 6) ?
             <div className="question-content">
@@ -122,7 +122,7 @@ class QuestionsBlock extends Component {
                     }
                     </div>
               </div> :
-            <ResultPromocode/>
+            <ResultPromocode idBlogger={idBlogger}/>
         );
     }
 }
