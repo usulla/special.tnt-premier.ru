@@ -40,12 +40,12 @@ class StartPage extends Component {
                 </div>
                 <div className='startpage__content'>
                     <ul className='startpage__list'>
-                        <li><span><img src={icon1}/></span>Жми на кнопку ниже</li>
-                        <li><span><img src={icon2}/></span>Отвечай на 5 простых вопросов</li>
-                        <li><span><img src={icon3}/></span>Отвечай правильно!</li>
-                        <li><span><img src={icon4}/></span>Если не ошибешься ни разу, то получишь 14 дней просмотра на ТНТ-PREMIER</li>
-                        <li><span><img src={icon5}/></span>Готов? Тогда поехали!</li>
-                        <li><span><img src={icon6}/></span>Внимание! Промокод будет показан только 1 раз! Обязательно скопируй его или отправь себе на почту.</li>
+                        <li><span><img src={icon1} alt="Storage icon"/></span>Жми на кнопку ниже</li>
+                        <li><span><img src={icon2} alt="Storage icon"/></span>Отвечай на 5 простых вопросов</li>
+                        <li><span><img src={icon3} alt="Storage icon"/></span>Отвечай правильно!</li>
+                        <li><span><img src={icon4} alt="Storage icon"/></span>Если не ошибешься ни разу, то получишь 14 дней просмотра на ТНТ-PREMIER</li>
+                        <li><span><img src={icon5} alt="Storage icon"/></span>Готов? Тогда поехали!</li>
+                        <li><span><img src={icon6} alt="Storage icon"/></span>Внимание! Промокод будет показан только 1 раз! Обязательно скопируй его или отправь себе на почту.</li>
                     </ul>
                     <div className='button start-button' onClick={e => this.startQuestions(e)}>
                 Начать

@@ -55,6 +55,7 @@
         align-items: center;
         justify-content: center;
         float: left;
+        flex-shrink: 0;
 
         img {
             width: 16px;
