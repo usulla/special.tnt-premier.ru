@@ -28,10 +28,10 @@ class App extends Component {
         console.log(this.state.idBlogger, 'idBlogger');
     }
     render() {
-        const { numbersQuestions, viewStartPage, question, questionImage, answers, idBlogger } = this.state
+        const { numbersQuestions, viewStartPage, question, questionImage, answers, idBlogger } = this.state;
         return (
             <div className="App">
-        <header className="tnt-premier-logo">
+           <header className="tnt-premier-logo">
           <img src={logo} alt="ТНТ Premier" />
         </header>
         {(viewStartPage) ?
