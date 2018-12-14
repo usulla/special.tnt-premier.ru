@@ -1,0 +1,147 @@
+@import "../../variables.scss";
+
+.result__title {
+    font-family: Rubik;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: -0.9px;
+    text-align: center;
+    color: $gold;
+}
+
+.result__content {
+    color: $gold;
+
+    .top-like {
+        width: 85px;
+        height: 85px;
+        border-radius: 100px;
+        display: flex;
+        border: 4px solid #f1b769;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 40px;
+
+        img {
+            width: 32px;
+        }
+    }
+
+    .button.copy-button,
+    .button.send-button {
+        margin: 15px auto 15px;
+    }
+
+    .title_small {
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+
+        span {
+            font-weight: normal;
+        }
+
+        &.normal {
+            font-weight: normal;
+        }
+    }
+
+    .title_small__bottom {
+        margin-top: 25px;
+        margin-bottom: 25px;
+        padding: 0 10px;
+    }
+
+    .sadtext {
+        font-size: 20px;
+        font-weight: normal;
+        line-height: 1.1;
+        margin: 25px auto 20px;
+        letter-spacing: -1.3px;
+        text-align: center;
+        color: #ffffff;
+    }
+
+    .result__promocode {
+        width: 427px;
+        max-width: 90%;
+        height: 60px;
+        border: 1px solid #f1b769;
+        font-size: 40px;
+        line-height: 40px;
+        font-weight: bold;
+        letter-spacing: 4.3px;
+        text-align: center;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px auto 15px;
+    }
+
+    .result__attention {
+        text-align: center;
+    }
+
+    .instruction {
+        background-color: #090909;
+        width: 908px;
+        margin: 0 auto;
+        max-width: 90%;
+        padding: 0 30px;
+
+        .instruction-content {
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 1.34;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+            padding-top: 26px;
+            padding-bottom: 30px;
+            margin: 0 auto;
+
+            img.appstore {
+                width: 179px;
+                margin-right: 12px;
+                margin-top: 15px;
+            }
+
+            img.googleplay {
+                width: 193px;
+                margin-top: 15px;
+            }
+
+            img.web {
+                width: 179px;
+                margin-top: 15px;
+            }
+
+            a {
+                color: #fff;
+                text-decoration: none;
+            }
+        }
+    }
+
+    .rules {
+        font-size: 10px;
+        letter-spacing: -0.4px;
+        color: #ffffff;
+        margin-top: 20px;
+
+        a {
+            text-decoration: underline;
+            color: #ffffff !important;
+            text-decoration: none;
+        }
+    }
+
+    .footer-soc {
+        text-align: center;
+        font-size: 12px;
+        letter-spacing: -0.8px;
+        margin-top: 55px;
+        padding-bottom: 25px;
+        color: $gold;
+    }
+}

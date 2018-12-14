@@ -5,6 +5,10 @@
     max-width: 90%;
     margin: 0 auto 45px;
 
+    .button.next-question {
+        margin: 15px auto 0;
+    }
+
     .question__number-row {
         text-align: right;
 
@@ -89,11 +93,17 @@
             background: $gold;
             color: #000;
         }
-        &.correctly{
-        	background:#91dc5a;
+
+        &.correctly {
+            background: #91dc5a;
+            border: 1px solid #91dc5a;
+            color: #fff;
         }
-        &.wrong{
-        	background:#d80027;
+
+        &.wrong {
+            background: #d80027;
+            border: 1px solid #d80027;
+            color: #fff;
         }
 
         &:hover {

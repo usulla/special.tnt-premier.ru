@@ -1,3 +1,5 @@
+@import "./variables.scss";
+
 html {
     line-height: 1.15;
     /* 1 */
@@ -12,4 +14,23 @@ body {
     background-size: 100%;
     background-position: top center;
     background-repeat: no-repeat;
+    font-family: Rubik, Arial;
+}
+
+.button {
+    width: 206px;
+    height: 51px;
+    line-height: 51px;
+    border-radius: 10px;
+    font-family: Rubik;
+    font-size: 12px;
+    font-weight: normal;
+    letter-spacing: -0.7px;
+    text-align: center;
+    color: #000000;
+    background: $gold;
+
+    &:hover{
+        cursor: pointer;
+    }
 }
