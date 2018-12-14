@@ -32,7 +32,7 @@ class App extends Component {
         return (
             <div className="App">
            <header className="tnt-premier-logo">
-          <img src={logo} alt="ТНТ Premier" />
+          <a href='https://tnt-premier.ru/' target='_blank'><img src={logo} alt="ТНТ Premier" /></a>
         </header>
         {(viewStartPage) ?
         <StartPage viewStartPage={this.viewStartPage}/> :

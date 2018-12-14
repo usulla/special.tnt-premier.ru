@@ -17,7 +17,8 @@ class QuestionsBlock extends Component {
             correctAnswer: '',
             allowedAnswer: true,
             numbersQuestions: [],
-            currentQuestions: 2
+            currentQuestions: 2,
+            textStatus: 'Ты абсолютно прав!'
         };
     }
     componentDidMount() {
@@ -29,18 +30,29 @@ class QuestionsBlock extends Component {
         if (this.state.allowedAnswer == true) {
             this.setState({ allowedAnswer: false });
             // Номер 2-го и следующих вопросов для отправки на бэкенд
-            var currentNum = this.props.numbersQuestions[this.state.count];
+            var currentNum = this.props.numbersQuestions[(this.state.count) - 1];
             this.setState({ currentQuestions: currentNum });
             // Номер выбранного овтета
             var answerNum = Number(e.target.dataset.id) + 1;
             e.target.classList.add('active');
             // отправляем номер текущего вопроса и номер выбранного ответа 
-            axios.post(`https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/question/${currentNum}`, { question: currentNum, answer: answerNum })
+            var formData = new FormData();
+            formData.append('question', currentNum);
+            formData.append('answer', answerNum);
+            fetch(`https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/question/${currentNum}`, {
+                    method: 'POST',
+                    body: formData
+                })
                 .then(response => {
+                    return response.json();
+                })
+                .then((data) => {
                     // номер верного ответа
-                    var correctAnswer = response.data.correctAnswer;
+                    var correctAnswer = Number(data.correctAnswer);
+                    var textStatus = data.text;
+                    
                     // убираем вопрос и выводим результат 
-                    this.setState({ loadingQuestion: false });
+                    this.setState({ loadingQuestion: false, textStatus: textStatus });
                     // если верный ответ меняем состояние на true и добавляем к кнопке класс correctly
                     if (correctAnswer == answerNum) {
                         this.setState({ correctAnswer: true });
@@ -83,7 +95,7 @@ class QuestionsBlock extends Component {
     }
 
     render() {
-        const { count, sendanswer, loadingQuestion, correctAnswer } = this.state
+        const { count, sendanswer, loadingQuestion, correctAnswer, textStatus } = this.state
         const { numbersQuestions, question, questionImage, answers, idBlogger } = this.props
 
         return (
@@ -102,13 +114,13 @@ class QuestionsBlock extends Component {
                   (correctAnswer) ?
                   <div>
                   <span className='correctly'>
-                    Ты абсолютно прав!
+                    {textStatus}
                   </span>
                   <div className='button next-question' onClick={e => this.nextQuestion(e)}>Следующий вопрос</div>
                    </div> :
                   <div>
                    <span className='wrong'>
-                    Увы, но ответ неверный!
+                    {textStatus}
                    </span>
                    <div className='button next-question' onClick={e => this.nextQuestion(e)}>Следующий вопрос</div>
                    </div>
