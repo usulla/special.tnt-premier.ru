@@ -60,7 +60,7 @@ class StartPage extends Component {
         return (
             <div className="question-content">
                 <div className='result__title'>
-                    Хочешь подписку на ТНТ-PREMIER?
+                    Хочешь подписку<br/> на ТНТ-PREMIER?
                 </div>
                 <div className='startpage__content'>
                     <ul className='startpage__list'>

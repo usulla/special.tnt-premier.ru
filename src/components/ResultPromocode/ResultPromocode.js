@@ -61,12 +61,18 @@ class ResultPromocode extends Component {
                         <div className="instruction">
                             <div className="instruction-content">
                                 1. Скачать приложение ТНТ-PREMIER! <br />
+                               <a href='https://itunes.apple.com/ru/app/tnt-premier/id1334187043' target='_blank'>
                                 <img className="appstore" src={appstore} alt="App store" />
+                                </a>
+                                <a href='https:https://play.google.com/store/apps/details?id=gpm.tnt_premier' target='_blank'>
                                 <img className="googleplay" src={googleplay} alt="Google play" />
+                                </a>
                                 <br />
                                 <br />
                                 2. Или зайти на сайт <br />
+                                <a href='https://tnt-premier.ru/' target='_blank'>
                                 <img className="web" src={web} alt="Web" />
+                                </a>
                                 <br />
                                 <br />
                                 3. Войти в свой аккаунт или зарегистрироваться на сервисе
