@@ -162,4 +162,24 @@
 		letter-spacing: -.6px;
 		color: $gold;
 	}
+
+	&__callout {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		padding: $global-padding;
+		max-width: 427px;
+		margin: 0 auto;
+
+		&-success {
+			margin: 0 4px;
+			color: lightgreen;
+		}
+
+		&-fail {
+			margin: 0 4px;
+			color: tomato;
+		}
+	}
 }
