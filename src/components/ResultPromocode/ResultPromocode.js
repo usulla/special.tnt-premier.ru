@@ -7,6 +7,7 @@ import like from '../../images/result/like2x.png';
 import sadface from '../../images/result/sadface2x.png';
 import './ResultPromocode.scss';
 import Sharing from '../Sharing/Sharing'
+import EmailForm from '../EmailForm/EmailForm'
 
 class ResultPromocode extends Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class ResultPromocode extends Component {
             givePromocode: true,
             idBlogger: this.props.idBlogger
         };
+        this.POSTEmail = this.POSTEmail.bind(this);
     }
     componentDidMount() {}
     copyPromocode(e) {
@@ -26,8 +28,16 @@ class ResultPromocode extends Component {
         const { idBlogger } = this.props;
         return idBlogger !== nextProps.idBlogger;
     }
+    POSTEmail(event) {
+        event.prevendDefault();
+        const { target } = event;
+        const { value } = target;
+
+        alert(value);
+    }
     render() {
         const { givePromocode, idBlogger } = this.state;
+        const { POSTEmail } = this;
 
         return (
             <div className="result__content">
@@ -57,7 +67,11 @@ class ResultPromocode extends Component {
                             Отправить промокод на почту
                         </div>
 
-                        <div className="title_small title_small__bottom">Как воспользоваться промокодом?</div>
+                        <EmailForm
+                            className='email-form'
+                            buttonText='Как воспользоваться промокодом?'
+                            submitHandler={POSTEmail}/>
+
                         <div className="instruction">
                             <div className="instruction-content">
                                 1. Скачать приложение ТНТ-PREMIER! <br />
