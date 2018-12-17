@@ -6,43 +6,56 @@ import web from '../../images/result/web2x.png';
 import like from '../../images/result/like2x.png';
 import sadface from '../../images/result/sadface2x.png';
 import './ResultPromocode.scss';
-import Sharing from '../Sharing/Sharing'
-import EmailForm from '../EmailForm/EmailForm'
+import Sharing from '../Sharing/Sharing';
+import EmailForm from '../EmailForm/EmailForm';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 class ResultPromocode extends Component {
     constructor(props) {
         super(props);
-        const { idBlogger } = this.props;
         this.state = {
-            givePromocode: true,
-            idBlogger: this.props.idBlogger
+            givePromocode: false,
+            idBlogger: this.props.idBlogger,
+            subscribed: null,
+            copied: false,
+            copyButtonText: 'Скопировать промокод',
         };
+        this.promocodeNode = React.createRef();
+        
         this.POSTEmail = this.POSTEmail.bind(this);
     }
-    componentDidMount() {}
-    copyPromocode(e) {
-        var promocode = document.querySelector('.result__promocode').innerText;
-        navigator.clipboard.writeText(promocode);
-    }
-    shouldComponentUpdate(nextProps) {
-        const { idBlogger } = this.props;
-        return idBlogger !== nextProps.idBlogger;
+    componentDidMount() {
+        const { promocodeNode } = this.state;
+        if (promocodeNode) {
+            const promocode = this.promocodeNode.current.innerText.trim();
+            this.setState({
+                promocode
+            });
+        }
     }
     POSTEmail(event) {
         event.preventDefault();
         const { target } = event;
-        console.log('target: ', target);
 
         fetch('https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/subscribe', {
             method: 'POST',
             body: new FormData(target)
         })
-        .then(response => console.log(response))
-        .catch(error => {throw Error(error)});
+        .then(response => response.json())
+        .then(data => {
+            const { success } = data;
+            this.setState({
+                subscribed: success
+            });
+        })
+        .then(() => {
+            console.log('subscribed: ', this.state);
+        })
+        .catch(error => {console.error(error)});
     }
     render() {
-        const { givePromocode, idBlogger } = this.state;
-        const { POSTEmail } = this;
+        const { givePromocode, idBlogger, subscribed, copyButtonText, promocode } = this.state;
+        const { POSTEmail, promocodeNode } = this;
 
         return (
             <div className="result__content">
@@ -60,23 +73,28 @@ class ResultPromocode extends Component {
                 </div>
                 {givePromocode ? (
                     <div>
-                        <div className="result__promocode">BG3200</div>
+                        <div className="result__promocode" ref={promocodeNode}>BG3200</div>
                         <div className="result__attention">
                             Внимание! Промокод будет показан только 1 раз! Обязательно
                             <br /> скопируй его или отправь себе на почту.
                         </div>
-                        <div className="button copy-button" onClick={(e) => this.copyPromocode(e)}>
-                            Скопировать промокод
-                        </div>
-                        {/* <div className="button send-button" onClick={(e) => this.copyPromocode(e)}>
-                            Отправить промокод на почту
-                        </div> */}
+
+                        <CopyToClipboard
+                            className="button copy-button"
+                            text={promocode}
+                            onCopy={() => {
+                                this.setState({
+                                    copyButtonText: 'Промокод скопирован'
+                                })
+                            }}>
+                            <span>{copyButtonText}</span>
+                        </CopyToClipboard>
 
                         <EmailForm
                             className='email-form'
                             buttonText='Отправить промокод на почту'
-                            submitHandler={POSTEmail}>
-                            
+                            submitHandler={POSTEmail}
+                            subscribed={subscribed} >
                             <p className='email-form__howto'>
                                 <a href='#' className='email-form__link'>
                                     Как воспользоваться промокодом?
@@ -138,9 +156,19 @@ class ResultPromocode extends Component {
                             <br /> всегда быть в курсе наших акций,
                             <br /> введи свой еmail в поле ниже.
                         </div>
-                        <div className="button send-button" onClick={(e) => this.copyPromocode(e)}>
-                            Отправить
-                        </div>
+
+                        <EmailForm
+                            className='email-form'
+                            buttonText='Отправить промокод на почту'
+                            submitHandler={POSTEmail}
+                            subscribed={subscribed} >
+                            <p className='email-form__howto'>
+                                <a href='#' className='email-form__link'>
+                                    Как воспользоваться промокодом?
+                                </a>
+                            </p>
+                        </EmailForm>
+                        
                         <div className="result__attention">
                             *Нажимая «Отправить» вы подтверждаете, что
                             <br /> соглашаетесь получать на указанный еmail
