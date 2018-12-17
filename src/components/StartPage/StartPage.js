@@ -52,7 +52,8 @@ class StartPage extends Component {
                         // отправляем в App, что можно показывать вопросы
                         this.props.viewStartPage(this.state.viewStartPage, this.state.question, this.state.questionImage, this.state.answers, this.state.numbersQuestions, this.state.idBlogger);
                     });
-            });
+            })
+            .catch(error => {throw new Error(error)});
     }
 
     render() {
