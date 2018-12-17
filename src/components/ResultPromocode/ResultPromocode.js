@@ -29,11 +29,16 @@ class ResultPromocode extends Component {
         return idBlogger !== nextProps.idBlogger;
     }
     POSTEmail(event) {
-        event.prevendDefault();
+        event.preventDefault();
         const { target } = event;
-        const { value } = target;
+        console.log('target: ', target);
 
-        alert(value);
+        fetch('https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/subscribe', {
+            method: 'POST',
+            body: new FormData(target)
+        })
+        .then(response => console.log(response))
+        .catch(error => {throw Error(error)});
     }
     render() {
         const { givePromocode, idBlogger } = this.state;
@@ -63,14 +68,21 @@ class ResultPromocode extends Component {
                         <div className="button copy-button" onClick={(e) => this.copyPromocode(e)}>
                             Скопировать промокод
                         </div>
-                        <div className="button send-button" onClick={(e) => this.copyPromocode(e)}>
+                        {/* <div className="button send-button" onClick={(e) => this.copyPromocode(e)}>
                             Отправить промокод на почту
-                        </div>
+                        </div> */}
 
                         <EmailForm
                             className='email-form'
-                            buttonText='Как воспользоваться промокодом?'
-                            submitHandler={POSTEmail}/>
+                            buttonText='Отправить промокод на почту'
+                            submitHandler={POSTEmail}>
+                            
+                            <p className='email-form__howto'>
+                                <a href='#' className='email-form__link'>
+                                    Как воспользоваться промокодом?
+                                </a>
+                            </p>
+                        </EmailForm>
 
                         <div className="instruction">
                             <div className="instruction-content">
