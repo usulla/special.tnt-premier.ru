@@ -38,8 +38,10 @@ class StartPage extends Component {
                         const { data } = response;
                         const {
                                 question,
-                                questionImage,
                                 answers } = data;
+
+                        const questionImage = data.image;
+
 
                         this.setState({
                             question,
@@ -47,7 +49,6 @@ class StartPage extends Component {
                             answers,
                             idBlogger
                         });
-
                         // отправляем в App, что можно показывать вопросы
                         this.props.viewStartPage(this.state.viewStartPage, this.state.question, this.state.questionImage, this.state.answers, this.state.numbersQuestions, this.state.idBlogger);
                     });
@@ -59,7 +60,7 @@ class StartPage extends Component {
         return (
             <div className="question-content">
                 <div className='result__title'>
-                    Хочешь подписку на ТНТ-PREMIER?
+                    Хочешь подписку<br/> на ТНТ-PREMIER?
                 </div>
                 <div className='startpage__content'>
                     <ul className='startpage__list'>
