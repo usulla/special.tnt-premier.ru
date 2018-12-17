@@ -18,12 +18,14 @@ class QuestionsBlock extends Component {
             allowedAnswer: true,
             numbersQuestions: [],
             currentQuestions: 2,
-            textStatus: 'Ты абсолютно прав!'
+            textStatus: 'Ты абсолютно прав!',
+            imageChange: '',
+            changeImage: true
         };
     }
     componentDidMount() {
         const { numbersQuestions } = this.props;
-        this.setState({ numbersQuestions });
+        this.setState({ numbersQuestions, question: this.props.question, answers: this.props.answers, questionImage: this.props.questionImage });
     }
 
     answerClick(e) {
@@ -49,8 +51,14 @@ class QuestionsBlock extends Component {
                 .then((data) => {
                     // номер верного ответа
                     var correctAnswer = Number(data.correctAnswer);
+                    console.log(correctAnswer, 'correctAnswer999')
                     var textStatus = data.text;
-                    
+
+                    // картинка, которая меняется при ответе на вопрос
+                    if (data.image) {
+                        this.setState({ imageChange: data.image, changeImage: false });
+
+                    }
                     // убираем вопрос и выводим результат 
                     this.setState({ loadingQuestion: false, textStatus: textStatus });
                     // если верный ответ меняем состояние на true и добавляем к кнопке класс correctly
@@ -72,34 +80,40 @@ class QuestionsBlock extends Component {
     }
     // При нажатии кнопки Следующий вопрос
     nextQuestion(e) {
-        //отправляем номер следующего вопроса
-        axios.get('/questionsData3.json', { question: this.state.count })
-            .then(response => {
-                // удаляем все дополнительные классы у кнопок
-                document.querySelector('.question__answer.active').classList.remove('active');
-                document.querySelector('.question__answer.correctly').classList.remove('correctly');
-                if (document.querySelector('.question__answer.wrong')) {
-                    document.querySelector('.question__answer.wrong').classList.remove('wrong');
-                }
-                //и в ответ получаем текст вопроса, картинку, варианты ответов
-                this.setState({ question: response.data.question, questionImage: response.data.questionImage, answers: response.data.answers });
-                // убираем вопрос и выводим результат 
-                this.setState({ loadingQuestion: true });
-                // разерешаем выбирать ответ (нажимать на кнопки)
-                this.setState({ allowedAnswer: true });
-            });
+        const { count } = this.state;
+        const newVal = count + 1;
         // увеличиваем номер вопроса
-        this.setState((prevState, { count }) => ({
-            count: prevState.count + 1
-        }));
+        this.setState({ count: newVal, changeImage: true });
+        console.log(newVal, 'newVal');
+        if (newVal < 6) {
+            //отправляем номер следующего вопроса
+            var currentNum = this.props.numbersQuestions[newVal - 1]
+            axios.get(`https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/question/${currentNum}`, { question: currentNum })
+                .then(response => {
+                    // удаляем все дополнительные классы у кнопок
+                    document.querySelector('.question__answer.active').classList.remove('active');
+                    document.querySelector('.question__answer.correctly').classList.remove('correctly');
+
+                    if (document.querySelector('.question__answer.wrong')) {
+                        document.querySelector('.question__answer.wrong').classList.remove('wrong');
+                    }
+                    //и в ответ получаем текст вопроса, картинку, варианты ответов
+                    // убираем вопрос и выводим результат 
+                    // разерешаем выбирать ответ (нажимать на кнопки)
+                    this.setState({ question: response.data.question, questionImage: response.data.image, answers: response.data.answers, loadingQuestion: true, allowedAnswer: true });
+                    console.log(this.state, 'questionImageeee');
+
+                });
+        } else {
+
+        }
     }
 
     render() {
-        const { count, sendanswer, loadingQuestion, correctAnswer, textStatus } = this.state
-        const { numbersQuestions, question, questionImage, answers, idBlogger } = this.props
-
+        const { count, sendanswer, question, answers, questionImage, loadingQuestion, correctAnswer, textStatus, changeImage } = this.state;
+        const { numbersQuestions, idBlogger } = this.props;
         return (
-            (count < 1) ?
+            (count < 6) ?
             <div className="question-content">
                 <div className="question__number-row">
                   <div className="question__number">
@@ -128,7 +142,8 @@ class QuestionsBlock extends Component {
                 </div> 
 
                 <div className="question__image">
-                    <img src={questionImage}/>
+       
+                    <img src={questionImage}/> 
                 </div>
                     <div className='question__answers'>
                     {answers.map((item, index) => 

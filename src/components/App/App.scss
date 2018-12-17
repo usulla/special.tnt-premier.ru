@@ -1,4 +1,5 @@
 @import "../../variables.scss";
+
 .tnt-premier-logo {
     width: 164px;
     height: 99px;
@@ -8,3 +9,12 @@
         width: 100%;
     }
 }
+    .App {
+        @media (min-width: $tablets) {
+        	height:100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+    }
