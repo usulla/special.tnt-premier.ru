@@ -53,7 +53,7 @@ class StartPage extends Component {
                         this.props.viewStartPage(this.state.viewStartPage, this.state.question, this.state.questionImage, this.state.answers, this.state.numbersQuestions, this.state.idBlogger);
                     });
             })
-            .catch(error => {throw new Error(error)});
+            .catch(error => {console.error(error)});
     }
 
     render() {
