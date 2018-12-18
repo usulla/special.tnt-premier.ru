@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import axios from 'axios';
+import ReactGA from 'react-ga';
 import appstore from '../../images/result/appstore2x.png';
 import googleplay from '../../images/result/google-play2x.png';
 import web from '../../images/result/web2x.png';
@@ -11,28 +11,28 @@ import EmailForm from '../EmailForm/EmailForm';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 class ResultPromocode extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
-            givePromocode: false,
             idBlogger: this.props.idBlogger,
             subscribed: null,
             copied: false,
             copyButtonText: 'Скопировать промокод',
         };
-        this.promocodeNode = React.createRef();
-        
+        // this.promocodeNode = React.createRef();
         this.POSTEmail = this.POSTEmail.bind(this);
     }
-    componentDidMount() {
-        const { promocodeNode } = this.state;
-        if (promocodeNode) {
-            const promocode = this.promocodeNode.current.innerText.trim();
-            this.setState({
-                promocode
-            });
-        }
-    }
+    // componentDidMount() {
+    //     const { promocodeNode } = this;
+    //     console.log('promocodeNode: ', promocodeNode);
+    //     if (promocodeNode) {
+    //         const promocode = promocodeNode.current.innerText.trim();
+    //         this.setState({
+    //             promocode
+    //         });
+    //     }
+    // }
     POSTEmail(event) {
         event.preventDefault();
         const { target } = event;
@@ -52,16 +52,77 @@ class ResultPromocode extends Component {
             console.log('subscribed: ', this.state);
         })
         .catch(error => {console.error(error)});
+        this.shareSendGa = this.shareSendGa.bind(this);
     }
+    shareSendGa(event) {
+        console.log(event.currentTarget, 'current');
+        if (event.currentTarget.classList.contains('sharing__socials--twitter')) {
+            // SEND GA EVENT
+            ReactGA.ga('send', 'event', 'Result', 'Click', 'ShareTwitter');
+
+        } else if (event.currentTarget.classList.contains('sharing__socials--facebook')) {
+             // SEND GA EVENT
+            ReactGA.ga('send', 'event', 'Result', 'Click', 'ShareFacebook');
+
+        } else if (event.currentTarget.classList.contains('sharing__socials--vk')) {
+             // SEND GA EVENT
+            ReactGA.ga('send', 'event', 'Result', 'Click', 'ShareVk');
+
+        }
+    }
+    copyPromocode() {
+        // SEND GA EVENT
+        ReactGA.ga('send', 'event', 'Result', 'Click', 'CopyPromocode');
+        // var promocode = document.querySelector('.result__promocode').innerText;
+        // navigator.clipboard.writeText(promocode);
+        //нашли наш контейнер
+
+        // Select the email link anchor text  
+        // var emailLink = document.querySelector('.result__promocode');
+        // var range = document.createRange();
+        // range.selectNode(emailLink);
+        // window.getSelection().addRange(range);
+
+        // try {
+        //     // Now that we've selected the anchor text, execute the copy command  
+        //     var successful = document.execCommand('copy');
+        //     var msg = successful ? 'successful' : 'unsuccessful';
+        //     console.log('Copy email command was ' + msg);
+        // } catch (err) {
+        //     console.log('Oops, unable to copy');
+        // }
+
+        // Remove the selections - NOTE: Should use
+        // removeRange(range) when it is supported  
+        // window.getSelection().removeAllRanges();
+    }
+
     render() {
-        const { givePromocode, idBlogger, subscribed, copyButtonText, promocode } = this.state;
-        const { POSTEmail, promocodeNode } = this;
+        const { idBlogger, subscribed, copyButtonText } = this.state;
+        const { POSTEmail, promocodeNode, shareSendGa } = this;
+        const { numbersQuestions, result, givePromocode, promocode } = this.props;
+
+        console.log('givePromocode:', givePromocode);
+
+        if (givePromocode == true) {
+            // SEND GA EVENT
+            ReactGA.ga('send', 'event', 'Result', 'View', 'ViewPositiveResult');
+        } else {
+            // SEND GA EVENT
+            ReactGA.ga('send', 'event', 'Result', 'View', 'ViewNegativeResult');
+        }
 
         return (
             <div className="result__content">
-                <div className="top-like">{givePromocode ? <img src={like} alt="Like" /> : <img src={sadface} alt="Sadface" />}</div>
+                <div className="top-like">
+                    {
+                        givePromocode ?
+                            <img src={like} alt="Like" /> :
+                            <img src={sadface} alt="Sadface" />
+                    }
+                </div>
                 <div className="result__title">
-                    Твой результат ХХХ из ХХХ
+                    Твой результат {result} из {numbersQuestions}
                     <br />
                     {givePromocode ? (
                         <span className="title_small">
@@ -73,7 +134,7 @@ class ResultPromocode extends Component {
                 </div>
                 {givePromocode ? (
                     <div>
-                        <div className="result__promocode" ref={promocodeNode}>BG3200</div>
+                        <div className="result__promocode" ref={promocode}>{promocode}</div>
                         <div className="result__attention">
                             Внимание! Промокод будет показан только 1 раз! Обязательно
                             <br /> скопируй его или отправь себе на почту.
@@ -144,7 +205,8 @@ class ResultPromocode extends Component {
                                         fill: '#ffcd7f'
                                     }}
                                     logoFillColor='#0f1010'
-                                    surveyId={idBlogger}/>
+                                    surveyId={idBlogger} 
+                                    onChoose={shareSendGa}/>
                             </div>
                         </div>
                     </div>

@@ -1,30 +1,39 @@
 @import '../../variables.scss';
 
 .sharing {
-	display: grid;
-	grid-row-gap: $gutter-width;
-	margin-top: 55px;
-	padding-bottom: 25px;
+    display: grid;
+    grid-row-gap: $gutter-width;
+    margin-top: 55px;
+    padding-bottom: 25px;
 
-	&__title {
-		text-align: center;
-		font-size: 12px;
-		letter-spacing: -.8px;
-		color: $gold;
-		margin: 0;
-	}
-	&__socials {
-		display: flex;
-		justify-content: center;
-		
-		&:not(:empty) {
-			margin: $gutter-width / -4 -12px;
-		}
-	}
-	&__social {
-		padding: $gutter-width / 4 12px;
-	}
-	&__button {
-		display: block;
-	}
+    &__title {
+        text-align: center;
+        font-size: 12px;
+        letter-spacing: -.8px;
+        color: $gold;
+        margin: 0;
+    }
+
+    &__socials {
+        display: flex;
+        justify-content: center;
+
+        &:not(:empty) {
+            margin: $gutter-width / -4 -12px;
+        }
+    }
+
+    &__social {
+        padding: $gutter-width / 4 12px;
+    }
+
+    &__button {
+        display: block;
+    }
+
+    .sharing__social {
+        &:hover {
+            cirsor: pointer;
+        }
+    }
 }
