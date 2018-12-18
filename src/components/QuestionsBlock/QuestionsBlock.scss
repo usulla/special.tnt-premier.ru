@@ -7,6 +7,15 @@
 
     .button.next-question {
         margin: 15px auto 0;
+        border: 1px solid $gold;
+        background: none;
+        color: $gold;
+
+        img {
+            width: 16px;
+            margin-left: 5px;
+            margin-top: 5px;
+        }
     }
 
     .question__number-row {
@@ -40,16 +49,19 @@
         color: $gold;
         border: 1px solid #f1b769;
         border-radius: 10px 10px 0px 0px;
-        padding: 0px 10px 0px 10px;
-        height: 126px;
+        padding: 8px 10px;
+        min-height: 126px;
         display: flex;
         align-items: center;
         justify-content: center;
 
         span {
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 364px;
             max-width: 90%;
+            margin: 0 auto;
 
             &.correctly {
                 color: #91dc5a;
@@ -57,6 +69,11 @@
 
             &.wrong {
                 color: #d80027;
+            }
+
+            img {
+                margin-right: 10px;
+                width: 30px;
             }
         }
     }
@@ -95,19 +112,21 @@
         }
 
         &.correctly {
-            background: #91dc5a;
+            background: #91dc5a !important;
             border: 1px solid #91dc5a;
             color: #fff;
         }
 
         &.wrong {
-            background: #d80027;
+            background: #d80027 !important;
             border: 1px solid #d80027;
             color: #fff;
         }
 
         &:hover {
             cursor: pointer;
+            background: $gold;
+            color: #000;
         }
     }
 }
