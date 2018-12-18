@@ -69,7 +69,6 @@ class StartPage extends Component {
             }
 
         render() {
-            const { question } = this.state
             return (
                 <div className="question-content">
                 <div className='result__title'>
