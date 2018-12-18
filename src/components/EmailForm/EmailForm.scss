@@ -1,0 +1,185 @@
+@import '../../variables.scss';
+
+.email-form {
+	$email-form: &;
+	box-sizing: border-box;
+	max-width: 427px;
+	margin: 0 auto;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	&__field {
+		font-family: 'Rubik', sans-serif;
+		width: 100%;
+		height: 60px;
+		background: none;
+		border-radius: 10px;
+		border: 1px solid $rajah;
+		color: $gold;
+		padding: 2px 27px;
+		font-size: 20px;
+		font-weight: normal;
+		font-style: normal;
+		font-stretch: normal;
+		line-height: normal;
+		letter-spacing: -.8px;
+		margin-bottom: 13px;
+		margin-top: 17px;
+
+		&::-webkit-input-placeholder {
+			/* Chrome */
+			color: $gold;
+		}
+		&:focus::-webkit-input-placeholder {
+			opacity: .5;
+		}
+		&:-ms-input-placeholder {
+			/* IE 10+ */
+			color: $gold;
+		}
+		&:focus:-ms-input-placeholder {
+			opacity: .5;
+		}
+		&::-moz-placeholder {
+			/* Firefox 19+ */
+			color: $gold;
+			opacity: 1;
+		}
+		&:focus::-moz-placeholder {
+			opacity: 0.5;
+		}
+		&:-moz-placeholder {
+			/* Firefox 4 - 18 */
+			color: $gold;
+			opacity: 1;
+		}
+		&:focus:-moz-placeholder {
+			opacity: .5;
+		}
+
+		&:-webkit-autofill {
+			background-color: $body-bg !important;
+			border-color: $rajah !important;
+			color: $gold !important;
+			-webkit-text-fill-color: $gold;
+			-webkit-box-shadow: 0 0 0px 100vw $body-bg inset;
+			transition: none;
+
+			&:hover,
+			&:focus {
+				background-color: $body-bg !important;
+				border-color: $rajah !important;
+				color: $gold !important;
+				-webkit-text-fill-color: $gold;
+				-webkit-box-shadow: 0 0 0px 100vw $body-bg inset;
+				transition: none;
+			}
+		}
+
+	}
+
+	&__submit {
+		display: block;
+		margin: 0 auto;
+		line-height: 51px;
+		border-radius: 10px;
+		font-family: 'Rubik', sans-serif;
+		font-size: 12px;
+		font-weight: normal;
+		letter-spacing: -.7px;
+		text-align: center;
+		color: $white;
+		background: $tundora;
+		border: none;
+		padding: $global-padding / 4 $global-padding / 2;
+		min-width: 206px;
+		margin-top: 33px;
+	}
+
+	&__howto {
+		text-align: center;
+		margin: 17px 0;
+	}
+
+	&__link {
+		font-family: 'Rubik', sans-serif;
+		font-size: 20px;
+		font-weight: bold;
+		font-style: normal;
+		font-stretch: normal;
+		line-height: normal;
+		letter-spacing: -.8px;
+		text-align: center;
+		color: $gold;
+		text-decoration: none;
+
+		&:hover,
+		&:active {
+			text-decoration: underline;
+		}
+	}
+
+	&__group {
+		&--checkbox {
+			position: relative;
+			padding: 0 45px;
+			text-align: justify;
+		}
+	}
+
+	&__checkbox {
+		$checkbox: &;
+		position: absolute;
+		left: 9px;
+		top: 0;
+		width: 20px;
+		height: 20px;
+		border: 1px solid $gold;
+		border-radius: 3px;
+
+		// &--fake {
+			
+		// }
+
+		&:checked {
+			& ~ #{$checkbox} {
+				&--fake {
+					background: url('./checked.svg') center center no-repeat;
+				}
+			}
+		}
+	}
+
+	&__label {
+		font-family: 'Rubik', sans-serif;
+		font-size: 14px;
+		font-weight: normal;
+		font-style: normal;
+		font-stretch: normal;
+		line-height: normal;
+		letter-spacing: -.6px;
+		color: $gold;
+	}
+
+	&__callout {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		padding: $global-padding;
+		max-width: 427px;
+		margin: 0 auto;
+
+		&-success {
+			margin: 0 4px;
+			color: lightgreen;
+		}
+
+		&-fail {
+			margin: 0 4px;
+			color: tomato;
+		}
+	}
+}

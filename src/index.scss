@@ -18,6 +18,7 @@ body {
 }
 
 .button {
+    display: block;
     width: 206px;
     height: 51px;
     line-height: 51px;
@@ -34,3 +35,8 @@ body {
         cursor: pointer;
     }
 }
+a:active, a:focus { outline: none; }
+
+input, textarea {outline:none;}
+input:active, textarea:active {outline:none;}
+:focus {outline:none;}
