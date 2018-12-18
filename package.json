@@ -11,11 +11,11 @@
     "node-sass": "^4.11.0",
     "npm": "^6.5.0",
     "react": "^16.6.3",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.6.3",
     "react-ga": "^2.5.6",
     "react-scripts": "2.1.1",
-    "react-share": "^2.4.0",
-    "react-svg": "^7.2.2"
+    "react-share": "^2.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
