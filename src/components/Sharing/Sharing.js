@@ -2,7 +2,6 @@ import React from 'react'
 import ReactGA from 'react-ga';
 import PropTypes from 'prop-types'
 import './Sharing.scss'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import {
     TwitterShareButton,
