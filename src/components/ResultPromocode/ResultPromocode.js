@@ -161,6 +161,11 @@ class ResultPromocode extends Component {
                                     Как воспользоваться промокодом?
                                 </a>
                             </p>
+                            <div className="result__attention">
+                                *Нажимая «Отправить» вы подтверждаете, что
+                                <br /> соглашаетесь получать на указанный еmail
+                                <br /> рекламную и другую информацию
+                            </div>
                         </EmailForm>
 
                         <div className="instruction">
@@ -229,13 +234,12 @@ class ResultPromocode extends Component {
                                     Как воспользоваться промокодом?
                                 </a>
                             </p>
+                            <div className="result__attention">
+                                *Нажимая «Отправить» вы подтверждаете, что
+                                <br /> соглашаетесь получать на указанный еmail
+                                <br /> рекламную и другую информацию
+                            </div>
                         </EmailForm>
-                        
-                        <div className="result__attention">
-                            *Нажимая «Отправить» вы подтверждаете, что
-                            <br /> соглашаетесь получать на указанный еmail
-                            <br /> рекламную и другую информацию
-                        </div>
                     </div>
                 )}
             </div>
