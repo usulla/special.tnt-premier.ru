@@ -3,8 +3,9 @@
 .email-form {
 	$email-form: &;
 	box-sizing: border-box;
-	max-width: 427px;
+	max-width: 467px;
 	margin: 0 auto;
+	padding: 0 20px;
 
 	* {
 		box-sizing: border-box;
@@ -81,6 +82,7 @@
 	}
 
 	&__submit {
+		cursor: not-allowed;
 		display: block;
 		margin: 0 auto;
 		line-height: 51px;
@@ -100,7 +102,17 @@
 
 	&__howto {
 		text-align: center;
-		margin: 17px 0;
+		margin: 27px 0 0;
+		font-family: 'Rubik', sans-serif;
+		font-size: 20px;
+		font-weight: bold;
+		font-style: normal;
+		font-stretch: normal;
+		line-height: normal;
+		letter-spacing: -.8px;
+		text-align: center;
+		color: $gold;
+		text-decoration: none;
 	}
 
 	&__link {
@@ -180,6 +192,14 @@
 		&-fail {
 			margin: 0 4px;
 			color: tomato;
+		}
+	}
+
+	&:valid {
+		#{$email-form}__submit {
+			cursor: pointer;
+			background-color: $gold;
+			color: $black;
 		}
 	}
 }
