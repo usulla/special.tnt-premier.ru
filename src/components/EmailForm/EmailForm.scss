@@ -90,8 +90,8 @@
 		font-weight: normal;
 		letter-spacing: -.7px;
 		text-align: center;
-		color: $black;
-		background: $gold;
+		color: $white;
+		background: $tundora;
 		border: none;
 		padding: $global-padding / 4 $global-padding / 2;
 		min-width: 206px;
@@ -100,7 +100,7 @@
 
 	&__howto {
 		text-align: center;
-		margin: 17px 0 0;
+		margin: 17px 0;
 	}
 
 	&__link {
