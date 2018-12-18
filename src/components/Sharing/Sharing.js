@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactGA from 'react-ga';
 import PropTypes from 'prop-types'
 import './Sharing.scss'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -19,26 +20,28 @@ const Sharing = ({
     round,
     iconBgStyle,
     logoFillColor,
-    surveyId
+    surveyId,
+    onChoose
 }) => {
     const url = `https://special.tnt-premier.ru/insta-bloggers-2018/?survey=${surveyId}`
+
     return (
         <div className={className}>
             <h6 className={`${className}__title`}>
                 {title}
             </h6>
             <div className={`${className}__socials`}>
-                <div className={`${className}__social`}>
+                <div className={`${className}__social ${className}__socials--twitter`} onClick={onChoose}>
                     <TwitterShareButton className={`${className}__button ${className}__button--twitter`} url={url}>
                         <TwitterIcon size={size} round={round} iconBgStyle={iconBgStyle} logoFillColor={logoFillColor} />
                     </TwitterShareButton>
                 </div>
-                <div className={`${className}__social`}>
+                <div className={`${className}__social ${className}__socials--facebook`} onClick={onChoose}>
                     <FacebookShareButton className={`${className}__button ${className}__button--facebook`} url={url}>
                         <FacebookIcon size={size} round={round} iconBgStyle={iconBgStyle} logoFillColor={logoFillColor} />
                     </FacebookShareButton>
                 </div>
-                <div className={`${className}__social`}>
+                <div className={`${className}__social ${className}__socials--vk`} onClick={onChoose}>
                     <VKShareButton className={`${className}__button ${className}__button--vk`} url={url}>
                         <VKIcon size={size} round={round} iconBgStyle={iconBgStyle} logoFillColor={logoFillColor} />
                     </VKShareButton>
@@ -55,7 +58,8 @@ Sharing.propTypes = {
     round: PropTypes.bool,
     iconBgStyle: PropTypes.object,
     logoFillColor: PropTypes.string,
-    url: PropTypes.string.isRequired
+    url: PropTypes.string.isRequired,
+    onChoose: PropTypes.func
 }
 
 Sharing.defaultProps = {
@@ -65,7 +69,8 @@ Sharing.defaultProps = {
     round: false,
     iconBgStyle: {},
     logoFillColor: '#000',
-    url: ''
+    url: '',
+    onChoose: f => f
 }
 
 export default Sharing

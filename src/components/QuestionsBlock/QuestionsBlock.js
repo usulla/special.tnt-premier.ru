@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import axios from 'axios';
-import q1 from '../../images/q1.jpg';
+import ReactSVG from 'react-svg'
+import arrow_right from '../../images/arrow-right2x.png';
+import negative from '../../images/negative.svg';
+import check from '../../images/check.svg';
 import './QuestionsBlock.scss';
 import ResultPromocode from '../ResultPromocode/ResultPromocode.js';
 
@@ -20,7 +24,9 @@ class QuestionsBlock extends Component {
             currentQuestions: 2,
             textStatus: 'Ты абсолютно прав!',
             imageChange: '',
-            changeImage: true
+            changeImage: true,
+            result: 0,
+            promocode: ''
         };
     }
     componentDidMount() {
@@ -34,6 +40,8 @@ class QuestionsBlock extends Component {
             // Номер 2-го и следующих вопросов для отправки на бэкенд
             var currentNum = this.props.numbersQuestions[(this.state.count) - 1];
             this.setState({ currentQuestions: currentNum });
+            // EVENT SEND TO GA
+            ReactGA.ga('send', 'event', 'Questions', 'Click', `AnsweredToQuestion-${this.state.count}`);
             // Номер выбранного овтета
             var answerNum = Number(e.target.dataset.id) + 1;
             e.target.classList.add('active');
@@ -51,13 +59,11 @@ class QuestionsBlock extends Component {
                 .then((data) => {
                     // номер верного ответа
                     var correctAnswer = Number(data.correctAnswer);
-                    console.log(correctAnswer, 'correctAnswer999')
                     var textStatus = data.text;
 
                     // картинка, которая меняется при ответе на вопрос
                     if (data.image) {
                         this.setState({ imageChange: data.image, changeImage: false });
-
                     }
                     // убираем вопрос и выводим результат 
                     this.setState({ loadingQuestion: false, textStatus: textStatus });
@@ -72,8 +78,7 @@ class QuestionsBlock extends Component {
                         //и добавляем к кнопке класс wrong
                         document.querySelector('.question__answer.active').classList.add('wrong');
                         // а к верному ответу класс correctly
-                        document.querySelectorAll('.question__answer')[correctAnswer].classList.add('correctly');
-
+                        document.querySelectorAll('.question__answer')[correctAnswer-1].classList.add('correctly');
                     }
                 });
         }
@@ -83,8 +88,7 @@ class QuestionsBlock extends Component {
         const { count } = this.state;
         const newVal = count + 1;
         // увеличиваем номер вопроса
-        this.setState({ count: newVal, changeImage: true });
-        console.log(newVal, 'newVal');
+        this.setState({ count: newVal });
         if (newVal < 6) {
             //отправляем номер следующего вопроса
             var currentNum = this.props.numbersQuestions[newVal - 1]
@@ -100,20 +104,25 @@ class QuestionsBlock extends Component {
                     //и в ответ получаем текст вопроса, картинку, варианты ответов
                     // убираем вопрос и выводим результат 
                     // разерешаем выбирать ответ (нажимать на кнопки)
-                    this.setState({ question: response.data.question, questionImage: response.data.image, answers: response.data.answers, loadingQuestion: true, allowedAnswer: true });
-                    console.log(this.state, 'questionImageeee');
-
-                });
+                    this.setState({ question: response.data.question, questionImage: response.data.image, answers: response.data.answers, loadingQuestion: true, allowedAnswer: true, changeImage: true });
+                })
         } else {
-
+            axios.get('https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/complete')
+                .then(response => {
+                    //и в ответ получаем текст вопроса, картинку, варианты ответов
+                    this.setState({ result: response.data.validCount, promocode: response.data.promoCode });
+                });
         }
     }
 
     render() {
-        const { count, sendanswer, question, answers, questionImage, loadingQuestion, correctAnswer, textStatus, changeImage } = this.state;
+        const { count, sendanswer, question, answers, questionImage, loadingQuestion, correctAnswer, textStatus, changeImage, imageChange, result, promocode } = this.state;
+     
         const { numbersQuestions, idBlogger } = this.props;
+        const givePromocode = (Number(result) < numbersQuestions.length) ? false : true;
+        console.log('--->', Number(result), numbersQuestions.length);
         return (
-            (count < 6) ?
+            (count < 1) ?
             <div className="question-content">
                 <div className="question__number-row">
                   <div className="question__number">
@@ -128,22 +137,27 @@ class QuestionsBlock extends Component {
                   (correctAnswer) ?
                   <div>
                   <span className='correctly'>
-                    {textStatus}
+                   <img src={check}/>
+                      {textStatus}
                   </span>
-                  <div className='button next-question' onClick={e => this.nextQuestion(e)}>Следующий вопрос</div>
+                  <div className='button next-question' onClick={e => this.nextQuestion(e)}>Следующий вопрос <img src={arrow_right} alt='Следующий вопрос'/>
+                  </div>
                    </div> :
                   <div>
                    <span className='wrong'>
-                    {textStatus}
+                      <img src={negative}/>
+                      {textStatus}
                    </span>
-                   <div className='button next-question' onClick={e => this.nextQuestion(e)}>Следующий вопрос</div>
+                   <div className='button next-question' onClick={e => this.nextQuestion(e)}>Следующий вопрос <img src={arrow_right} alt='Следующий вопрос'/></div>
                    </div>
                   }
                 </div> 
 
                 <div className="question__image">
-       
-                    <img src={questionImage}/> 
+                {(changeImage) ?
+                    <img src={questionImage}/> :
+                    <img src={imageChange}/>
+                }
                 </div>
                     <div className='question__answers'>
                     {answers.map((item, index) => 
@@ -154,7 +168,7 @@ class QuestionsBlock extends Component {
                     }
                     </div>
               </div> :
-            <ResultPromocode idBlogger={idBlogger}/>
+            <ResultPromocode idBlogger={idBlogger} result={result} promocode={promocode} givePromocode={givePromocode} numbersQuestions={this.state.numbersQuestions.length}/>
         );
     }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import axios from 'axios';
 import icon1 from '../../images/start/path2x.png';
 import icon2 from '../../images/start/question2x.png';
@@ -18,47 +19,58 @@ class StartPage extends Component {
             count: 1,
             viewStartPage: false,
             numbersQuestions: [],
-            idBlogger: ''
+            idBlogger: '',
+            comeTomorrow: false
         };
     }
 
     // При нажатии кнопки Начать
     startQuestions(e) {
+
         //отправляем номер запрашиваемого вопроса 1
         axios.get('https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/survey')
             .then(response => {
-                const { data } = response;
-                const idBlogger= data.survey;
+                    const { data } = response;
+                    const idBlogger = data.survey;
 
-                // загружаем номера вопросов из массива
-               this.setState({ numbersQuestions: response.data.questions});
-               axios.get(`https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/question/${response.data.questions[0]}`)
-                    .then(response => {
-                        // загружаем в состояния текст, картинку вороса и тексты вариантов ответов
-                        const { data } = response;
-                        const {
-                                question,
-                                answers } = data;
+                    // загружаем номера вопросов из массива
+                    this.setState({ numbersQuestions: response.data.questions });
+                    axios.get(`https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/question/${response.data.questions[0]}`)
+                        .then(response => {
+                                    // загружаем в состояния текст, картинку вороса и тексты вариантов ответов
+                                    const { data } = response;
+                                    const {
+                                        question,
+                                        answers
+                                    } = data;
 
-                        const questionImage = data.image;
+                                    const questionImage = data.image;
+                                    const responseStatus = Number(response.status);
 
+                                    if (responseStatus !== 200) {
+                                        this.setState({comeTomorrow: true});
+                                    }
+                                    else{
+                                    // SEND GA EVENT
+                                     ReactGA.ga('send', 'event', 'Questions', 'Click', 'StartTest');
+                                    }
 
-                        this.setState({
-                            question,
-                            questionImage,
-                            answers,
-                            idBlogger
+                                    this.setState({
+                                        question,
+                                        questionImage,
+                                        answers,
+                                        idBlogger
+                                    });
+                                    // отправляем в App, что можно показывать вопросы
+                                    this.props.viewStartPage(this.state.viewStartPage, this.state.question, this.state.questionImage, this.state.answers, this.state.numbersQuestions, this.state.idBlogger, this.state.comeTomorrow);
+                                });
                         });
-                        // отправляем в App, что можно показывать вопросы
-                        this.props.viewStartPage(this.state.viewStartPage, this.state.question, this.state.questionImage, this.state.answers, this.state.numbersQuestions, this.state.idBlogger);
-                    });
-            });
-    }
+            }
 
-    render() {
-        const { question } = this.state
-        return (
-            <div className="question-content">
+        render() {
+            const { question } = this.state
+            return (
+                <div className="question-content">
                 <div className='result__title'>
                     Хочешь подписку<br/> на ТНТ-PREMIER?
                 </div>
@@ -76,8 +88,8 @@ class StartPage extends Component {
               </div>
                 </div>
             </div>
-        );
+            );
+        }
     }
-}
 
-export default StartPage;
+    export default StartPage;
