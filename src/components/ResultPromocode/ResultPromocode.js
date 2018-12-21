@@ -22,14 +22,24 @@ class ResultPromocode extends Component {
         };
         this.POSTEmail = this.POSTEmail.bind(this);
     }
+    componentDidUpdate() {
+        console.log(this.props.givePromocode, 'this.props.givePromocode000')
+        if (this.props.givePromocode === true) {
+            // SEND GA EVENT
+            ReactGA.ga('send', 'event', 'Result', 'View', 'ViewPositiveResult');
+        } else {
+            // SEND GA EVENT
+            ReactGA.ga('send', 'event', 'Result', 'View', 'ViewNegativeResult');
+        }
+    }
     POSTEmail(event) {
         event.preventDefault();
         const { target } = event;
 
         fetch('https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/subscribe', {
-            method: 'POST',
-            body: new FormData(target)
-        })
+                method: 'POST',
+                body: new FormData(target)
+            })
             .then((response) => response.json())
             .then((data) => {
                 const { success } = data;
@@ -41,7 +51,16 @@ class ResultPromocode extends Component {
                 console.error(error);
             });
         this.shareSendGa = this.shareSendGa.bind(this);
+
+        if (event.currentTarget.querySelector('.email-form__submit').innerText == 'Отправить') {
+            // EVENT SEND TO GA
+            ReactGA.ga('send', 'event', 'Subscribe', 'Send', 'Subscription');
+        } else if (event.currentTarget.querySelector('.email-form__submit').innerText == 'Отправить промокод на почту'){
+            // EVENT SEND TO GA
+            ReactGA.ga('send', 'event', 'Subscribe', 'Send', 'SendPromocode');
+        }
     }
+
     shareSendGa(event) {
         if (event.currentTarget.classList.contains('sharing__socials--twitter')) {
             // SEND GA EVENT
@@ -56,21 +75,14 @@ class ResultPromocode extends Component {
     }
     copyPromocode() {
         // SEND GA EVENT
-        ReactGA.ga('send', 'event', 'Result', 'Click', 'CopyPromocode');
+      //  ReactGA.ga('send', 'event', 'Result', 'Click', 'CopyPromocode');
     }
 
     render() {
+        console.log(this.props.givePromocode, 'this.props.givePromocode999')
         const { idBlogger, subscribed, copyButtonText } = this.state;
         const { POSTEmail, shareSendGa } = this;
         const { numbersQuestions, result, givePromocode, promocode } = this.props;
-
-        if (givePromocode === true) {
-            // SEND GA EVENT
-            ReactGA.ga('send', 'event', 'Result', 'View', 'ViewPositiveResult');
-        } else {
-            // SEND GA EVENT
-            ReactGA.ga('send', 'event', 'Result', 'View', 'ViewNegativeResult');
-        }
 
         return (
             <div className="result__content">
@@ -105,6 +117,7 @@ class ResultPromocode extends Component {
                                 this.setState({
                                     copyButtonText: 'Промокод скопирован'
                                 });
+                            ReactGA.ga('send', 'event', 'Result', 'Click', 'CopyPromocode');
                             }}
                         >
                             <span>{copyButtonText}</span>
@@ -190,7 +203,8 @@ class ResultPromocode extends Component {
                             className="email-form"
                             buttonText="Отправить"
                             submitHandler={POSTEmail}
-                            subscribed={subscribed} >
+                            subscribed={subscribed} 
+                            onClick={(e) => this.gaSendEmail(e)}>
                             <p style={{marginTop: '42px', marginBottom: '0px', textAlign: 'center'}}>
                                 <img src={passMediaLogo} width='120' height='29' alt='Pass media logo' />
                             </p>

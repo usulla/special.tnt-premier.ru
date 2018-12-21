@@ -6,7 +6,7 @@ import StartPage from '../StartPage/StartPage.js';
 import QuestionsBlock from '../QuestionsBlock/QuestionsBlock.js';
 import ComeTomorrow from '../ComeTomorrow/ComeTomorrow.js';
 
-ReactGA.initialize('UA-000000-01');
+ReactGA.initialize('UA-66343339-12');
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 class App extends Component {
