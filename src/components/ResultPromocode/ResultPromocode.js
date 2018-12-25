@@ -52,10 +52,10 @@ class ResultPromocode extends Component {
             });
         this.shareSendGa = this.shareSendGa.bind(this);
 
-        if (event.currentTarget.querySelector('.email-form__submit').innerText == 'Отправить') {
+        if (event.currentTarget.querySelector('.email-form__submit').innerText === 'Отправить') {
             // EVENT SEND TO GA
             ReactGA.ga('send', 'event', 'Subscribe', 'Send', 'Subscription');
-        } else if (event.currentTarget.querySelector('.email-form__submit').innerText == 'Отправить промокод на почту'){
+        } else if (event.currentTarget.querySelector('.email-form__submit').innerText === 'Отправить промокод на почту'){
             // EVENT SEND TO GA
             ReactGA.ga('send', 'event', 'Subscribe', 'Send', 'SendPromocode');
         }
@@ -82,7 +82,7 @@ class ResultPromocode extends Component {
         console.log(this.props.givePromocode, 'this.props.givePromocode999')
         const { idBlogger, subscribed, copyButtonText } = this.state;
         const { POSTEmail, shareSendGa } = this;
-        const { numbersQuestions, result, givePromocode, promocode } = this.props;
+        const { numbersQuestions, result, givePromocode, promocode, surveyResult } = this.props;
 
         return (
             <div className="result__content">
@@ -186,6 +186,7 @@ class ResultPromocode extends Component {
                                     logoFillColor="#0f1010"
                                     surveyId={idBlogger}
                                     onChoose={shareSendGa}
+                                    surveyResult={surveyResult}
                                 />
                             </div>
                         </div>
@@ -242,6 +243,19 @@ class ResultPromocode extends Component {
                                     <img src={passMediaLogo} width='120' height='29' alt='Pass media logo' />
                                     <br/>
                                 </p>
+                                <Sharing
+                                    title="Не забудь рассказать друзьям о своей победе!"
+                                    className="sharing"
+                                    size={50}
+                                    round={true}
+                                    iconBgStyle={{
+                                        fill: '#ffcd7f'
+                                    }}
+                                    logoFillColor="#0f1010"
+                                    surveyId={idBlogger}
+                                    onChoose={shareSendGa}
+                                    surveyResult={surveyResult}
+                                />
                             </div>
                         </div>
                     </div>

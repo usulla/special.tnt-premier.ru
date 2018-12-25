@@ -19,9 +19,10 @@ const Sharing = ({
     iconBgStyle,
     logoFillColor,
     surveyId,
-    onChoose
+    onChoose,
+    surveyResult
 }) => {
-    const url = `https://special.tnt-premier.ru/insta-bloggers-2018/?survey=${surveyId}`
+    const url = `https://special.tnt-premier.ru/insta-bloggers-2018/?survey=${surveyId}&result=${surveyResult}`
 
     return (
         <div className={className}>

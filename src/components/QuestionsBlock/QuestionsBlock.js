@@ -122,7 +122,7 @@ class QuestionsBlock extends Component {
         } else {
             axios.get('https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/complete').then((response) => {
                 //и в ответ получаем текст вопроса, картинку, варианты ответов
-                this.setState({ result: response.data.validCount, promocode: response.data.promoCode });
+                this.setState({ result: response.data.validCount, promocode: response.data.promoCode, surveyResult: response.data.success });
             });
         }
     }
@@ -139,7 +139,8 @@ class QuestionsBlock extends Component {
             changeImage,
             imageChange,
             result,
-            promocode
+            promocode,
+            surveyResult = false,
         } = this.state;
 
         const { numbersQuestions, idBlogger } = this.props;
@@ -201,6 +202,7 @@ class QuestionsBlock extends Component {
                 promocode={promocode}
                 givePromocode={givePromocode}
                 numbersQuestions={this.state.numbersQuestions.length}
+                surveyResult={surveyResult}
             />
         );
     }
