@@ -3,6 +3,7 @@
 .result__title {
     font-family: Rubik;
     font-size: 24px;
+    padding:0 20px;
     font-weight: bold;
     letter-spacing: -0.9px;
     text-align: center;
@@ -90,7 +91,6 @@
         width: 908px;
         margin: 0 auto;
         max-width: 90%;
-        padding: 0 30px;
 
         .instruction-content {
             font-size: 14px;
