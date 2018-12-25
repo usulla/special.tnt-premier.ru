@@ -94,10 +94,10 @@ class ResultPromocode extends Component {
                     <br />
                     {givePromocode ? (
                         <span className="title_small">
-                            <span>Поздравляем! Лови</span> промокод!
+                            <span>Поздравляем! Лови</span> промокод!<br/>
                         </span>
                     ) : (
-                        <span className="title_small normal">Неплохо, но недостаточно для получения промокода.</span>
+                        <span className="title_small normal">Не расстраивайся!<br/> Ты все равно получишь свой промокод на почту!<br/></span>
                     )}
                 </div>
                 {givePromocode ? (
@@ -165,14 +165,14 @@ class ResultPromocode extends Component {
                                 <br />
                             </div>
                             <div className="rules">
-                                * Промокод предоставляет 14 дней бесплатной подписки PREMIER на сервисе ТНT-PREMIER.
+                                * Промокод предоставляет 1 месяц бесплатной подписки на ТНТ-PREMIER.
                                 Датой начала действия подписки считается дата активации промокода на сервисе
                                 ТНТ-PREMIER. Активировать промокод необходимо не позднее 31 декабря 2019 года.
                                 <br />
-                                <u style={{cursor: 'pointer'}}>
+                                <a href='/rules.pdf' target="_blank">
                                     Подробнее о сервисе ТНТ-PREMIER и о подписке PREMIER можно прочитать тут.
-                                </u>
-                                <p style={{marginTop: '20px', marginBottom: '0px', textAlign: 'center'}}>
+                                </a>
+                                <p style={{marginTop: '20px', marginBottom: '20px', textAlign: 'center'}}>
                                     <img src={passMediaLogo} width='120' height='29' alt='Pass media logo' />
                                 </p>
                                 <Sharing
@@ -192,23 +192,58 @@ class ResultPromocode extends Component {
                     </div>
                 ) : (
                     <div>
-                        <div className="sadtext">
-                            Не переживай, тебе обязательно
-                            <br /> повезет в следующий раз! А чтобы
-                            <br /> всегда быть в курсе наших акций,
-                            <br /> введи свой еmail в поле ниже.
-                        </div>
-
                         <EmailForm
                             className="email-form"
                             buttonText="Отправить"
                             submitHandler={POSTEmail}
                             subscribed={subscribed} 
                             onClick={(e) => this.gaSendEmail(e)}>
-                            <p style={{marginTop: '42px', marginBottom: '0px', textAlign: 'center'}}>
-                                <img src={passMediaLogo} width='120' height='29' alt='Pass media logo' />
+                            <p style={{marginTop: '42px', marginBottom: '40px', textAlign: 'center'}}>
                             </p>
                         </EmailForm>
+                          <div className="instruction">
+                            <div className="instruction-content">
+                                1. Скачать приложение ТНТ-PREMIER! <br />
+                                <a href="https://itunes.apple.com/ru/app/tnt-premier/id1334187043" target="_blank" rel="noopener noreferrer">
+                                    <img className="appstore" src={appstore} alt="App store" />
+                                </a>
+                                <a
+                                    href="https://play.google.com/store/apps/details?id=gpm.tnt_premier"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <img className="googleplay" src={googleplay} alt="Google play" />
+                                </a>
+                                <br />
+                                <br />
+                                2. Или зайти на сайт <br />
+                                <a href="https://tnt-premier.ru/" target="_blank" rel="noopener noreferrer">
+                                    <img className="web" src={web} alt="Web" />
+                                </a>
+                                <br />
+                                <br />
+                                3. Войти в свой аккаунт или зарегистрироваться на сервисе
+                                <br />
+                                4. Активировать промокод* <br />
+                                - на мобильном устройстве: в разделе Моё –&gt; Промокод <br />
+                                - на web версии: в разделе Профиль -&gt; Активировать промокод <br />
+                                5. Приятного просмотра! <br />
+                                Если возникли проблемы, пиши в нашу службу поддержки:{' '}
+                                <a href="mailto:help@tnt-premier.ru">help@tnt-premier.ru</a>
+                                <br />
+                            </div>
+                            <div className="rules">
+                               * Промокод предоставляет 14 дней бесплатной подписки PREMIER на сервисе ТНT-PREMIER. Датой начала действия подписки считается дата активации промокода на сервисе ТНТ-PREMIER. Активировать промокод необходимо не позднее 31 декабря 2019 года.
+                                <br />
+                                <a href='/rules.pdf' target="_blank">
+                                   Подробнее о сервисе ТНТ-PREMIER и о подписке PREMIER можно прочитать тут
+                                </a>
+                                <p style={{marginTop: '20px', marginBottom: '20px', textAlign: 'center'}}>
+                                    <img src={passMediaLogo} width='120' height='29' alt='Pass media logo' />
+                                    <br/>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>

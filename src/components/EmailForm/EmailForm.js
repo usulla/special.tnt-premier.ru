@@ -12,7 +12,7 @@ const EmailForm = ({ children, subscribed, className, buttonText, submitHandler 
 				Указанный вами Email <span className={`${className}__callout-fail`}>отклонён!</span>
 			</div> :
 			<form className={className} onSubmit={submitHandler}>
-				<input type='email' name='email' placeholder='Email' className={`${className}__field`} required />
+				<input type='email' name='email' placeholder='Введи свой email, чтобы получить промокод' className={`${className}__field`} required />
 				<div className={`${className}__group ${className}__group--checkbox`}>
 					<input
 						type='checkbox'
