@@ -20,8 +20,11 @@ class App extends Component {
             viewStartPage: true,
             numbersQuestions: [],
             idBlogger: 0,
-            comeTomorrow: false
+            comeTomorrow: true
         };
+    }
+    componentDidUpdate() {
+        console.log(this.state.viewStartPage, 'viewStartPage333')
     }
     //получаем из компонента StartPage событие старта теста, вопрос, картинку, ответы и массив с номерами вопросов и записываем в состояния
     viewStartPage = (view, question, image, answers, numbers, idBlogger, comeTomorrow) => {
@@ -39,6 +42,7 @@ class App extends Component {
         // SEND GA EVENT
         ReactGA.ga('send', 'event', 'Logo', 'Click', 'LogoTransition');
     }
+
     render() {
         const {
             numbersQuestions,
@@ -60,7 +64,7 @@ class App extends Component {
                     <StartPage viewStartPage={this.viewStartPage} />
                 ) : (
                     <div>
-                        {comeTomorrow ? (
+                        {(1) ? (
                             //  передаем в компонент с вопросами массив с номерами вопросов и контент для вопросов
                             <ComeTomorrow />
                         ) : (

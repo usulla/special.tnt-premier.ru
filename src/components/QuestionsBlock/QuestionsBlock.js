@@ -54,9 +54,9 @@ class QuestionsBlock extends Component {
             formData.append('question', currentNum);
             formData.append('answer', answerNum);
             fetch(`https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/question/${currentNum}`, {
-                method: 'POST',
-                body: formData
-            })
+                    method: 'POST',
+                    body: formData
+                })
                 .then((response) => {
                     return response.json();
                 })

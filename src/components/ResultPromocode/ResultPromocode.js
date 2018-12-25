@@ -169,9 +169,9 @@ class ResultPromocode extends Component {
                                 Датой начала действия подписки считается дата активации промокода на сервисе
                                 ТНТ-PREMIER. Активировать промокод необходимо не позднее 31 декабря 2019 года.
                                 <br />
-                                <a href='/rules.pdf' target="_blank">
-                                    Подробнее о сервисе ТНТ-PREMIER и о подписке PREMIER можно прочитать <a href='/rules.pdf' target="_blank">тут</a>.
-                                </a>
+       
+                                    Подробнее о сервисе ТНТ-PREMIER и о подписке PREMIER можно прочитать <a href='/rules.pdf' target="_blank">тут </a>.
+                               
                                 <p style={{marginTop: '20px', marginBottom: '20px', textAlign: 'center'}}>
                                     <img src={passMediaLogo} width='120' height='29' alt='Pass media logo' />
                                 </p>
@@ -236,7 +236,6 @@ class ResultPromocode extends Component {
                             <div className="rules">
                                * Промокод предоставляет 14 дней бесплатной подписки PREMIER на сервисе ТНT-PREMIER. Датой начала действия подписки считается дата активации промокода на сервисе ТНТ-PREMIER. Активировать промокод необходимо не позднее 31 декабря 2019 года.
                                 <br />
-                                <a href='/rules.pdf' target="_blank">
                                    Подробнее о сервисе ТНТ-PREMIER и о подписке PREMIER можно прочитать <a href='/rules.pdf' target="_blank">тут
                                 </a>
                                 <p style={{marginTop: '20px', marginBottom: '20px', textAlign: 'center'}}>

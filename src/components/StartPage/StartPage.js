@@ -37,40 +37,43 @@ class StartPage extends Component {
                     this.setState({ numbersQuestions: response.data.questions });
                     axios.get(`https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/question/${response.data.questions[0]}`)
                         .then(response => {
-                                // загружаем в состояния текст, картинку вороса и тексты вариантов ответов
-                                const { data } = response;
-                                const {
-                                    question,
-                                    answers
-                                } = data;
+                            // загружаем в состояния текст, картинку вороса и тексты вариантов ответов
+                            const { data } = response;
+                            const {
+                                question,
+                                answers
+                            } = data;
 
-                                const questionImage = data.image;
-                                const responseStatus = Number(response.status);
+                            const questionImage = data.image;
+                            //   const responseStatus = Number(response.status);
 
-                                if (responseStatus !== 200) {
-                                    this.setState({comeTomorrow: true});
-                                }
-                                else{
-                                // SEND GA EVENT
-                                    ReactGA.ga('send', 'event', 'Questions', 'Click', 'StartTest');
-                                }
+                            // SEND GA EVENT
+                            ReactGA.ga('send', 'event', 'Questions', 'Click', 'StartTest');
 
-                                this.setState({
-                                    question,
-                                    questionImage,
-                                    answers,
-                                    idBlogger
-                                });
-                                // отправляем в App, что можно показывать вопросы
-                                this.props.viewStartPage(this.state.viewStartPage, this.state.question, this.state.questionImage, this.state.answers, this.state.numbersQuestions, this.state.idBlogger, this.state.comeTomorrow);
-                            })
-                            .catch(error => {console.error(error)});
-                        });
-            }
+                            this.setState({
+                                question,
+                                questionImage,
+                                answers,
+                                idBlogger
+                            });
+                            // отправляем в App, что можно показывать вопросы
+                            this.props.viewStartPage(this.state.viewStartPage, this.state.question, this.state.questionImage, this.state.answers, this.state.numbersQuestions, this.state.idBlogger, this.state.comeTomorrow);
+                        })
+                        .catch(error => { console.error(error) });
+                },
+                (error) => {
+                    console.log(this.state.comeTomorrow);
+                    this.setState({ comeTomorrow: true });
+                    console.log(this.state.comeTomorrow);
+                    // отправляем в App, что можно показывать вопросы
+                    this.props.viewStartPage(this.state.viewStartPage, this.state.question, this.state.questionImage, this.state.answers, this.state.numbersQuestions, this.state.idBlogger, this.state.comeTomorrow);
 
-        render() {
-            return (
-                <div className="question-content">
+                });
+    }
+
+    render() {
+        return (
+            <div className="question-content">
                 <div className='result__title'>
                     Хочешь подписку<br/> на ТНТ-PREMIER?
                 </div>
@@ -88,8 +91,8 @@ class StartPage extends Component {
               </div>
                 </div>
             </div>
-            );
-        }
+        );
     }
+}
 
-    export default StartPage;
+export default StartPage;
