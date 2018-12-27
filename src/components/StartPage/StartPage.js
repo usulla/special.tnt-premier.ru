@@ -20,19 +20,22 @@ class StartPage extends Component {
             viewStartPage: false,
             numbersQuestions: [],
             idBlogger: '',
-            comeTomorrow: false
+            comeTomorrow: false,
+            messageError:false
         };
     }
 
     // При нажатии кнопки Начать
     startQuestions(e) {
-
         //отправляем номер запрашиваемого вопроса 1
         axios.get('https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/survey')
             .then(response => {
                     const { data } = response;
+                    if (data.message == 'Доступные опросы не найдены') {
+                         // отправляем в App, что можно показывать вопросы
+                        this.props.viewStartPage(this.state.viewStartPage, this.state.question, this.state.questionImage, this.state.answers, this.state.numbersQuestions, this.state.idBlogger, true);
+                    }
                     const idBlogger = data.survey;
-
                     // загружаем номера вопросов из массива
                     this.setState({ numbersQuestions: response.data.questions });
                     axios.get(`https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/question/${response.data.questions[0]}`)
@@ -49,7 +52,6 @@ class StartPage extends Component {
 
                             // SEND GA EVENT
                             ReactGA.ga('send', 'event', 'Questions', 'Click', 'StartTest');
-
                             this.setState({
                                 question,
                                 questionImage,
@@ -62,12 +64,10 @@ class StartPage extends Component {
                         .catch(error => { console.error(error) });
                 },
                 (error) => {
-                    console.log(this.state.comeTomorrow);
                     this.setState({ comeTomorrow: true });
                     console.log(this.state.comeTomorrow);
                     // отправляем в App, что можно показывать вопросы
                     this.props.viewStartPage(this.state.viewStartPage, this.state.question, this.state.questionImage, this.state.answers, this.state.numbersQuestions, this.state.idBlogger, this.state.comeTomorrow);
-
                 });
     }
 

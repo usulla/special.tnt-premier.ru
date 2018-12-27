@@ -1,16 +1,26 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import { Component } from 'react'
 import PropTypes from 'prop-types'
 import './EmailForm.scss'
 
-const EmailForm = ({ children, subscribed, className, buttonText, submitHandler }) =>
-	(subscribed === true ?
-		<div className={`${className}__callout`}>
+class EmailForm extends Component {
+    render() {
+        const { status, children, subscribed, className, buttonText, submitHandler } = this.props;
+        return (
+            (subscribed === true ?
+                <div className={`${className}__callout`}>
 			Ваш Email успешно <span className={`${className}__callout-success`}>отправлен!</span>
 		</div> :
-		subscribed === false ?
-			<div className={`${className}__callout`}>
-				Указанный вами Email <span className={`${className}__callout-fail`}>отклонён!</span>
-			</div> :
+                <Fragment>
+			{
+				status === 'error' ?
+					<div className={`${className}__callout`}>
+						<span className={`${className}__callout-fail`}>
+							На этот e-mail уже был отправлен промокод. Укажите другой!
+						</span>
+					</div> :
+					null
+			} 
 			<form className={className} onSubmit={submitHandler}>
 				<input type='email' name='email' placeholder='Введи свой email, чтобы получить промокод' className={`${className}__field`} required />
 				<div className={`${className}__group ${className}__group--checkbox`}>
@@ -33,29 +43,31 @@ const EmailForm = ({ children, subscribed, className, buttonText, submitHandler 
 						children :
 						null
 				}
-			</form>)
-
+			</form>
+		</Fragment>))
+    }
+}
 EmailForm.defaultProps = {
-	children: null,
-	subscribed: null,
-	className: 'email-form',
-	buttonText: '',
-	submitHandler: f => f
+    children: null,
+    subscribed: null,
+    className: 'email-form',
+    buttonText: '',
+    submitHandler: f => f
 }
 
 EmailForm.propTypes = {
-	children: PropTypes.oneOfType([
-		PropTypes.arrayOf(PropTypes.node),
-		PropTypes.node,
-		PropTypes.string
-	]),
-	subscribed: PropTypes.oneOfType([
-		PropTypes.oneOf([null]),
-		PropTypes.bool
-	]),
-	className: PropTypes.string.isRequired,
-	buttonText: PropTypes.string,
-	submitHandler: PropTypes.func
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node,
+        PropTypes.string
+    ]),
+    subscribed: PropTypes.oneOfType([
+        PropTypes.oneOf([null]),
+        PropTypes.bool
+    ]),
+    className: PropTypes.string.isRequired,
+    buttonText: PropTypes.string,
+    submitHandler: PropTypes.func
 }
 
 export default EmailForm

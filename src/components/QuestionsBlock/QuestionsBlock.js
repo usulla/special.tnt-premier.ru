@@ -6,6 +6,7 @@ import negative from '../../images/negative.svg';
 import check from '../../images/check.svg';
 import './QuestionsBlock.scss';
 import ResultPromocode from '../ResultPromocode/ResultPromocode.js';
+import NoPromocode from '../NoPromocode/NoPromocode.js';
 
 class QuestionsBlock extends Component {
     constructor() {
@@ -25,7 +26,8 @@ class QuestionsBlock extends Component {
             imageChange: '',
             changeImage: true,
             result: 0,
-            promocode: ''
+            promocode: '',
+            message: ''
         };
     }
     componentDidMount() {
@@ -55,6 +57,7 @@ class QuestionsBlock extends Component {
             formData.append('answer', answerNum);
             fetch(`https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/question/${currentNum}`, {
                     method: 'POST',
+                    credentials: 'include',
                     body: formData
                 })
                 .then((response) => {
@@ -121,8 +124,8 @@ class QuestionsBlock extends Component {
                 });
         } else {
             axios.get('https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/complete').then((response) => {
-                //и в ответ получаем текст вопроса, картинку, варианты ответов
-                this.setState({ result: response.data.validCount, promocode: response.data.promoCode, surveyResult: response.data.success });
+                    //и в ответ получаем текст вопроса, картинку, варианты ответов
+                    this.setState({ result: response.data.validCount, promocode: response.data.promoCode, surveyResult: response.data.success, message: response.data.message });
             });
         }
     }
@@ -141,11 +144,12 @@ class QuestionsBlock extends Component {
             result,
             promocode,
             surveyResult = false,
+            message
         } = this.state;
 
         const { numbersQuestions, idBlogger } = this.props;
         const givePromocode = Number(result) < numbersQuestions.length ? false : true;
-
+        console.log(message, 'mes')
         return count < 6 ? (
             <div className="question-content">
                 <div className="question__number-row">
@@ -196,7 +200,8 @@ class QuestionsBlock extends Component {
                 </div>
             </div>
         ) : (
-            <ResultPromocode
+            message !== 'Промокоды закончились' ? (
+                <ResultPromocode
                 idBlogger={idBlogger}
                 result={result}
                 promocode={promocode}
@@ -204,6 +209,10 @@ class QuestionsBlock extends Component {
                 numbersQuestions={this.state.numbersQuestions.length}
                 surveyResult={surveyResult}
             />
+            ) :
+            (
+                <NoPromocode/>
+            )
         );
     }
 }

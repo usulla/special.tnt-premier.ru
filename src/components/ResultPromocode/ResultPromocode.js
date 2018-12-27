@@ -18,12 +18,12 @@ class ResultPromocode extends Component {
             idBlogger: this.props.idBlogger,
             subscribed: null,
             copied: false,
-            copyButtonText: 'Скопировать промокод'
+            copyButtonText: 'Скопировать промокод',
+            status: ''
         };
         this.POSTEmail = this.POSTEmail.bind(this);
     }
     componentDidUpdate() {
-        console.log(this.props.givePromocode, 'this.props.givePromocode000')
         if (this.props.givePromocode === true) {
             // SEND GA EVENT
             ReactGA.ga('send', 'event', 'Result', 'View', 'ViewPositiveResult');
@@ -38,13 +38,15 @@ class ResultPromocode extends Component {
 
         fetch('https://special.tnt-premier.ru/insta-bloggers-2018/api/v1/subscribe', {
                 method: 'POST',
+                credentials:'include',
                 body: new FormData(target)
             })
             .then((response) => response.json())
             .then((data) => {
-                const { success } = data;
+                const { success, status } = data;
                 this.setState({
-                    subscribed: success
+                    subscribed: success,
+                    status: status
                 });
             })
             .catch((error) => {
@@ -73,14 +75,9 @@ class ResultPromocode extends Component {
             ReactGA.ga('send', 'event', 'Result', 'Click', 'ShareVk');
         }
     }
-    copyPromocode() {
-        // SEND GA EVENT
-      //  ReactGA.ga('send', 'event', 'Result', 'Click', 'CopyPromocode');
-    }
 
     render() {
-        console.log(this.props.givePromocode, 'this.props.givePromocode999')
-        const { idBlogger, subscribed, copyButtonText } = this.state;
+        const { idBlogger, subscribed, copyButtonText, status } = this.state;
         const { POSTEmail, shareSendGa } = this;
         const { numbersQuestions, result, givePromocode, promocode, surveyResult } = this.props;
 
@@ -127,7 +124,9 @@ class ResultPromocode extends Component {
                             className="email-form"
                             buttonText="Отправить промокод на почту"
                             submitHandler={POSTEmail}
-                            subscribed={subscribed}>
+                            status={status}
+                            subscribed={subscribed}
+                            >
                             <p className="email-form__howto">
                                 Как воспользоваться промокодом?
                             </p>
@@ -197,6 +196,7 @@ class ResultPromocode extends Component {
                             className="email-form"
                             buttonText="Отправить"
                             submitHandler={POSTEmail}
+                            status={status}
                             subscribed={subscribed} 
                             onClick={(e) => this.gaSendEmail(e)}>
                             <p style={{marginTop: '42px', marginBottom: '40px', textAlign: 'center'}}>

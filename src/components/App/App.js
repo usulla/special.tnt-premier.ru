@@ -5,6 +5,7 @@ import './App.scss';
 import StartPage from '../StartPage/StartPage.js';
 import QuestionsBlock from '../QuestionsBlock/QuestionsBlock.js';
 import ComeTomorrow from '../ComeTomorrow/ComeTomorrow.js';
+import NoPromocode from '../NoPromocode/NoPromocode.js';
 
 ReactGA.initialize('UA-66343339-12');
 ReactGA.pageview(window.location.pathname + window.location.search);
@@ -20,11 +21,10 @@ class App extends Component {
             viewStartPage: true,
             numbersQuestions: [],
             idBlogger: 0,
-            comeTomorrow: true
+            comeTomorrow: false
         };
     }
     componentDidUpdate() {
-        console.log(this.state.viewStartPage, 'viewStartPage333')
     }
     //получаем из компонента StartPage событие старта теста, вопрос, картинку, ответы и массив с номерами вопросов и записываем в состояния
     viewStartPage = (view, question, image, answers, numbers, idBlogger, comeTomorrow) => {
@@ -64,9 +64,9 @@ class App extends Component {
                     <StartPage viewStartPage={this.viewStartPage} />
                 ) : (
                     <div>
-                        {(1) ? (
+                        {(comeTomorrow) ? (
                             //  передаем в компонент с вопросами массив с номерами вопросов и контент для вопросов
-                            <ComeTomorrow />
+                            <NoPromocode />
                         ) : (
                             <QuestionsBlock
                                 numbersQuestions={numbersQuestions}
